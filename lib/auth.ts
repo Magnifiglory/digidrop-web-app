@@ -10,7 +10,7 @@ export async function getToken() {
 }
 
 export async function setToken(token: string) {
-  const expireAt = new Date(Date.now() + 1 * 60 * 60 * 1000); // 1 day
+  const expireAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 1 day (24 hours)
   const cookieStore = await cookies();
   await cookieStore.set({
     name: 'accessToken',

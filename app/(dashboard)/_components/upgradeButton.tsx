@@ -8,6 +8,7 @@ import { parseEther, formatEther } from 'viem';
 import PassNFT_ABI from '@/contract/abi.json';
 import { PassInfo } from '@/types/response-type';
 import { useRouter } from 'next/navigation';
+import { ConnectWalletButton } from '@/components/common/WalletConnectButton';
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`;
 
@@ -47,8 +48,6 @@ export default function UpgradeButton({ pass }: { pass: Pass }) {
   });
 
 const userPassTuple = userPass as [bigint, bigint] | undefined;
-console.log("user address:", address)
-console.log("user current pass from contract in tuple:", userPassTuple)
   // userPassData is [bigint, bigint] or undefined
 const currentPassId = userPassTuple ? Number(userPassTuple[0]) : 0;
 
@@ -61,7 +60,6 @@ const currentPassId = userPassTuple ? Number(userPassTuple[0]) : 0;
     args: currentPassId > 0 ? [BigInt(currentPassId)] : undefined,
     query: { enabled: currentPassId > 0 },
   });
-  console.log("user current pass:",currentPassRaw)
   const { data: newPass } = useReadContract({
         address: CONTRACT_ADDRESS,
         abi: PassNFT_ABI,
@@ -71,7 +69,6 @@ const currentPassId = userPassTuple ? Number(userPassTuple[0]) : 0;
               enabled: mounted && isConnected,
           },
         });
-console.log("selected pass:", newPass)
  const currentPass = currentPassRaw as PassInfo | undefined;
  const upgradePass = newPass as PassInfo | undefined;
   useEffect(() => {
@@ -110,7 +107,14 @@ console.log("selected pass:", newPass)
 
 
 
-  if (!isConnected) return <p>Connect wallet</p>;
+  if (!isConnected) return (
+    <div className="flex flex-col items-center gap-3 p-4 bg-white/[0.02] border border-white/10 rounded-2xl">
+      <p className="text-sm text-gray-400 text-center font-chakra">
+        Connect your wallet to upgrade your pass
+      </p>
+      <ConnectWalletButton />
+    </div>
+  );
   if (loadingPrice) return <p>Loading upgrade price...</p>;
 
   if (deltaWei === null || deltaWei <= 0) {
@@ -141,7 +145,7 @@ console.log("selected pass:", newPass)
         <button
           onClick={handleUpgrade}
           disabled={isWriting || isConfirming}
-          className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-bold py-4 rounded-2xl text-2xl"
+          className="w-auto mx-auto block max-w-max px-8 py-2.5 text-sm font-semibold rounded-xl bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white shadow-md active:scale-95 transition-all"
         >
           {isWriting ? 'Approve upgrade...' : isConfirming ? 'Upgrading...' : 'Upgrade Now'}
         </button>

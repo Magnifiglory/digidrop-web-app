@@ -54,14 +54,14 @@ const SECTIONS: ManifestoSection[] = [
     ]
   },
   {
-    id: 'economics',
-    title: '4. B2B Economics & Yields',
-    subtitle: 'Sustainable Enterprise Value Loop',
+    id: 'roadmap',
+    title: '4. What Comes Next',
+    subtitle: 'The Road Beyond Season 1',
     content: [
-      'The long-term sustainability of the Digidrops constellation is powered by an active enterprise B2B value flow:',
-      'Web3 AI protocols and enterprise clients pay a 15–25% B2B platform fee in native assets to access our highly verified, bot-free workforce and high-fidelity human datasets.',
-      'These incoming enterprise fees are funneled directly back to the verified community of human pilots as real, liquid yield (USDC/BNB) in exchange for their intellectual output.',
-      'This establishes a self-sustaining economic orbit where utility, labor, and rewards flow in harmony without reliance on speculative emission pools.'
+      'After Season 1 establishes a large, verified, bot-free human community, Digidrops will begin building the infrastructure for a decentralized AI data platform.',
+      'Verified users will be positioned to take on more complex tasks for Web3 AI builders — including data labeling, content validation, and structured feedback — as the platform continues to evolve.',
+      'This long-term vision is subject to ongoing development. No future features or utility constitute a promise of financial return. Participation in Digidrops is for platform access and community engagement only.',
+      'Season 1 is the foundation. What gets built on top of it depends on the community that shows up.'
     ]
   }
 ];
@@ -90,15 +90,11 @@ export default function Manifesto() {
   }, []);
 
   return (
-    <main
-      className="min-h-screen w-full scroll-smooth bg-[#0B0B0B] font-chakra text-white"
-      style={{
-        backgroundImage:
-          'linear-gradient(179.5deg, rgba(59, 31, 131, 0.25) 0.44%, rgba(0, 74, 173, 0.4) 49.67%, rgba(28, 28, 28, 0.7) 99.57%), url("/assets/bg.png")',
-        backgroundAttachment: 'fixed',
-        backgroundSize: 'cover',
-      }}
-    >
+    <main className='relative min-h-screen w-full scroll-smooth bg-[#0B0B0B] font-chakra text-white bg-[url("/assets/bg/mint%20pass%20bg.webp")] bg-cover bg-center bg-no-repeat bg-fixed overflow-hidden'>
+      {/* Ambient glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute inset-0 bg-black/70 pointer-events-none" />
+
       <div className="container mx-auto flex flex-col px-6 py-24 md:flex-row lg:px-12 relative z-10">
         
         {/* ===== SIDEBAR NAV ===== */}
@@ -150,7 +146,7 @@ export default function Manifesto() {
             </p>
           </header>
 
-          <div className="space-y-24">
+          <div className="space-y-12">
             {SECTIONS.map((section) => (
               <article 
                 key={section.id} 
@@ -178,7 +174,7 @@ export default function Manifesto() {
                 </div>
 
                 {section.bulletPoints && (
-                  <div className="mt-8 p-6 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-sm">
+                  <div className="mt-8 p-6 bg-black/50 border border-white/10 rounded-2xl backdrop-blur-md">
                     <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-4 font-mono">
                       Key Telemetry Parameters
                     </h4>

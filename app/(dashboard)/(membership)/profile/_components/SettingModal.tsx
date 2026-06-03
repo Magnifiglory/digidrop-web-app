@@ -5,17 +5,13 @@ import { X, Loader2, AlertCircle, Camera, ChevronDown, ChevronUp } from "lucide-
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { apiClient } from "@/apiClient/client";
+import { toast } from "sonner";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const AVATAR_OPTIONS = Array.from({ length: 20 }, (_, i) => 
   `https://api.dicebear.com/9.x/notionists/svg?seed=Avatar${i}&backgroundColor=b6e3f4,c0aede,d1d4f9`
 );
-
-const toast = {
-  success: (msg: string) => console.log(`Success: ${msg}`),
-  error: (msg: string) => console.error(`Error: ${msg}`),
-};
 
 
 interface AvatarOption {

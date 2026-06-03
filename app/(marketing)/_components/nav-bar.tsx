@@ -4,15 +4,17 @@ import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { Menu, X, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { faqItems, PLAY_STEPS } from "@/lib/constants/shared-data"
 
 const Navbar: React.FC = () => {
   const [isBetaDialogOpen, setIsBetaDialogOpen] = useState(false)
   const [isHowToPlayDialogOpen, setIsHowToPlayDialogOpen] = useState(false)
+  const [isFAQDialogOpen, setIsFAQDialogOpen] = useState(false)
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden"
@@ -32,22 +34,18 @@ const Navbar: React.FC = () => {
   return (
     <>
       {/* ===== HEADER ===== */}
-      <header className="sticky top-0 z-50 h-16 w-full border-b border-white/10 bg-[#0B0B0B]/95 backdrop-blur-md font-chakra text-gray-200">
+      <header className="sticky top-0 z-50 h-16 w-full bg-[#0a0b1c]/70 backdrop-blur-md font-chakra text-gray-200">
         <div className="container mx-auto flex h-full items-center justify-between px-4 sm:px-6 lg:px-8">
           
           {/* Logo Section */}
           <div className="flex items-center gap-8">
-            <Link
-              href="/"
-              className="flex items-center"
-              
-            >
+            <Link href="/" className="flex items-center">
               <Image
                 src="/assets/logo.png"
                 alt="Digi Drop Logo"
                 width={3000}
                 height={100}
-                className="h-12 sm:h-14 md:h-16 w-auto object-contain"
+                className="h-8 sm:h-9 md:h-10 w-auto object-contain"
                 priority
               />
             </Link>
@@ -60,12 +58,12 @@ const Navbar: React.FC = () => {
               >
                 How to Play
               </button>
-              <Link
-                href="#FAQs"
+              <button
+                onClick={() => setIsFAQDialogOpen(true)}
                 className="transition-colors hover:text-purple-400"
               >
                 FAQ
-              </Link>
+              </button>
             </nav>
           </div>
 
@@ -80,7 +78,7 @@ const Navbar: React.FC = () => {
             </Button>
             <Button
               asChild
-              className="bg-gray-100 font-chakra font-bold text-black hover:bg-gray-300"
+              className="bg-gradient-to-r from-[#09154a] via-purple-500 to-brandColor font-chakra font-bold text-white hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-[0_0_15px_rgba(203,108,230,0.3)] hover:shadow-[0_0_25px_rgba(203,108,230,0.6)] border-none"
             >
               <Link href="/login">Login with Wallet</Link>
             </Button>
@@ -115,7 +113,7 @@ const Navbar: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 top-16 z-40 overflow-y-auto bg-black/95 backdrop-blur-sm md:hidden font-chakra"
+            className="fixed inset-0 top-16 z-40 overflow-y-auto bg-gradient-to-b from-[#09154a]/60 via-[#0a0b1c]/50 to-[#0b0b0b]/60 backdrop-blur-lg border-b border-blue-500/20 md:hidden font-chakra"
           >
             <div className="container mx-auto flex flex-col items-end gap-6 px-4 py-8">
               <button
@@ -125,13 +123,12 @@ const Navbar: React.FC = () => {
                 How to Play
               </button>
 
-              <Link
-                href="#FAQs"
+              <button
                 className="w-full text-right text-xl font-medium text-gray-100 hover:text-purple-400"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => handleMobileNavClick(() => setIsFAQDialogOpen(true))}
               >
                 FAQ
-              </Link>
+              </button>
 
               <div className="mt-4 w-full flex justify-end">
                 <Button
@@ -162,15 +159,14 @@ const Navbar: React.FC = () => {
             >
               <div className="text-center">
                 <h2 className="mb-2 text-2xl font-bold uppercase text-white">
-                  Beta Horizon
+                  You Are in Beta
                 </h2>
-                <p className="mb-6 text-lg text-purple-400">Pioneer the Unknown</p>
+                <p className="mb-6 text-lg text-purple-400">Season 1 is live now</p>
                 
                 <p className="mb-8 text-sm leading-relaxed text-gray-300">
-                  You are among the first to gaze upon this evolving galaxy. As beta
-                  voyagers, your discoveries refine the stars. Launch Bonus: Mint
-                  your Passport today to lock in your Stardust Multiplier before
-                  the galaxy expands.
+                  Digidrops is in its early stage. Things move fast. Mint your Passport
+                  now to lock in your Stardust Multiplier before Season 1 ends. Early
+                  users get the biggest head start on the leaderboard.
                 </p>
 
                 <div className="flex justify-center">
@@ -178,7 +174,7 @@ const Navbar: React.FC = () => {
                     onClick={() => setIsBetaDialogOpen(false)}
                     className="bg-purple-600 font-chakra hover:bg-purple-500 text-white"
                   >
-                    Close Transmission
+                    Got it
                   </Button>
                 </div>
               </div>
@@ -204,46 +200,28 @@ const Navbar: React.FC = () => {
               {/* Modal Header */}
               <div className="border-b border-white/10 bg-[#181818] px-6 py-5 text-center">
                 <h2 className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-2xl font-bold uppercase text-transparent">
-                  Welcome to Digiverse
+                  How to Play
                 </h2>
               </div>
 
               {/* Modal Body (Scrollable) */}
               <div className="overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-purple-900 scrollbar-track-transparent">
                 <div className="mb-8 text-center">
-                  <h3 className="mb-2 text-lg font-bold text-white">Chart Your Course</h3>
+                  <h3 className="mb-2 text-lg font-bold text-white">Get started in 5 steps</h3>
                   <p className="mx-auto max-w-md text-sm text-gray-400">
-                    Your odyssey begins with a single spark. Follow this
-                    celestial path to enter the ecosystem.
+                    It takes under 5 minutes to set up and start earning Stardust.
                   </p>
                 </div>
 
                 <div className="space-y-6">
-                  <StepItem
-                    number="1"
-                    title="Signal (Awaken Your Comms)"
-                    desc="Connect your wallet (Metamask, Trust Wallet) and switch your network to BNB Smart Chain (BEP20)."
-                  />
-                  <StepItem
-                    number="2"
-                    title="Supply (Select Your Engine)"
-                    desc="Choose your speed. Mint a Black (1x), White (2x), or Gold (4x) Passport. Higher tiers gather Stardust faster."
-                  />
-                  <StepItem
-                    number="3"
-                    title="Action (Embark on Quests)"
-                    desc="Dive into captivating challenges that spark creativity and community spirit."
-                  />
-                  <StepItem
-                    number="4"
-                    title="Ascension (Rise in Rank)"
-                    desc="Watch your Stardust shine among the brightest explorers in the universe."
-                  />
-                  <StepItem
-                    number="5"
-                    title="Expansion (Summon Allies)"
-                    desc="Share your referral beacon to guide others, weaving a richer tapestry of shared discovery."
-                  />
+                  {PLAY_STEPS.map((step) => (
+                    <StepItem
+                      key={step.number}
+                      number={step.number}
+                      title={step.title}
+                      desc={step.desc}
+                    />
+                  ))}
                 </div>
               </div>
 
@@ -251,6 +229,82 @@ const Navbar: React.FC = () => {
               <div className="border-t border-white/10 px-6 py-4 text-right">
                 <Button
                   onClick={() => setIsHowToPlayDialogOpen(false)}
+                  className="bg-purple-600 font-chakra hover:bg-purple-500 text-white"
+                >
+                  Close
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ===== FAQ DIALOG ===== */}
+      <AnimatePresence>
+        {isFAQDialogOpen && (
+          <div
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm font-chakra"
+            onClick={() => setIsFAQDialogOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="flex max-h-[85vh] w-full max-w-xl flex-col overflow-hidden rounded-xl border border-white/10 bg-[#181818] shadow-2xl"
+            >
+              {/* Modal Header */}
+              <div className="border-b border-white/10 bg-[#181818] px-6 py-5 text-center">
+                <h2 className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-2xl font-bold uppercase text-transparent">
+                  FAQ
+                </h2>
+                <p className="mt-1 text-sm text-gray-400">Common questions answered simply</p>
+              </div>
+
+              {/* Modal Body (Scrollable) */}
+              <div className="overflow-y-auto p-6 space-y-3 scrollbar-thin scrollbar-thumb-purple-900 scrollbar-track-transparent">
+                {faqItems.map((faq, index) => (
+                  <div
+                    key={index}
+                    className="overflow-hidden rounded-xl bg-black/50 border border-white/10 transition-colors duration-300 hover:border-purple-500/30"
+                  >
+                    <button
+                      onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
+                      className="flex w-full items-start justify-between gap-4 px-5 py-4 text-left"
+                    >
+                      <span className={`text-sm font-semibold sm:text-base transition-colors duration-300 ${
+                        openFaqIndex === index ? "text-purple-400" : "text-white"
+                      }`}>
+                        {faq.question}
+                      </span>
+                      <ChevronRight
+                        className={`mt-0.5 h-4 w-4 flex-shrink-0 text-gray-400 transition-transform duration-300 ${
+                          openFaqIndex === index ? "rotate-90 text-[#CB6CE6]" : ""
+                        }`}
+                      />
+                    </button>
+
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{
+                        height: openFaqIndex === index ? "auto" : 0,
+                        opacity: openFaqIndex === index ? 1 : 0,
+                      }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <p className="px-5 pb-5 pt-1 text-sm leading-relaxed text-gray-300 leading-relaxed">
+                        {faq.answer}
+                      </p>
+                    </motion.div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Modal Footer */}
+              <div className="border-t border-white/10 px-6 py-4 text-right">
+                <Button
+                  onClick={() => setIsFAQDialogOpen(false)}
                   className="bg-purple-600 font-chakra hover:bg-purple-500 text-white"
                 >
                   Close

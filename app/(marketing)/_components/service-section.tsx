@@ -19,7 +19,7 @@ const ServiceSection = () => {
       icon: "/assets_icon/4.png",
       title: "Signal",
       topic: "(Awaken Your Comms)",
-      text: "Connect your wallet (Metamask, Trust Wallet) and switch your network to BNB Smart Chain (BEP20).",
+      text: "Connect your wallet (Metamask, Trust Wallet) and switch your network to BNB Chain (BEP20).",
       delay: 0.2,
     },
     {
@@ -49,7 +49,7 @@ const ServiceSection = () => {
   ]
 
   return (
-    <section className="relative w-full bg-[#1C1C1C]/90 bg-[url('/assets/pattern-bg.png')] bg-cover bg-center bg-blend-multiply font-chakra text-white">
+    <section className="relative w-full font-chakra text-white bg-transparent">
       {/* ===== HOW TO PLAY ===== */}
       <div className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <motion.div {...fadeUp(0.1)} className="mb-16 text-center md:text-left">
@@ -68,8 +68,8 @@ const ServiceSection = () => {
               className="group flex h-full flex-col items-center rounded-2xl border border-white/10 bg-[#1C1C1C] p-8 text-center transition-all duration-300 hover:border-gray-400 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)]"
             >
               {/* Icon Wrapper for consistent height */}
-              <div className="mb-6 flex h-[160px] w-full items-center justify-center">
-                <div className="relative h-[130px] w-[150px]">
+              <div className="mb-6 flex h-[120px] sm:h-[160px] w-full items-center justify-center">
+                <div className="relative h-[110px] w-[125px] sm:h-[130px] sm:w-[150px]">
                 <Image
                   src={step.icon}
                   alt={step.title}

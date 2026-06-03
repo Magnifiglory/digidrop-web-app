@@ -16,9 +16,9 @@ const SECTIONS: TermSection[] = [
     id: 'agreements',
     title: '1. Agreements',
     content: [
-      'By minting a Digidrops pass, connecting a wallet, or entering the Digidrops dashboard, you accept this Voyager`s Accord.',
-      'A Digidrops pass minted as a soulbound access credential is required before dashboard access is granted. If these terms do not align with your path, do not proceed beyond the mint gate.',
-      'Digidrops is a socialFi platform, not a financial system, investment vehicle, or marketplace.',
+      'By minting a Digidrops Passport, connecting a wallet, or accessing the dashboard, you agree to these Terms.',
+      'A Digidrops Passport is required before dashboard access is granted. If you do not agree, do not proceed.',
+      'Digidrops is a participation platform — not a financial system, investment vehicle, or marketplace.',
     ],
   },
   {
@@ -26,7 +26,7 @@ const SECTIONS: TermSection[] = [
     title: '2. Rights & Laws',
     content: [
       'You confirm that your journey through Digidrops is lawful within your jurisdiction.',
-      'Nothing within this universe—Passes, Stardust, quests, multipliers, or rankings—represents:',
+      'Nothing on Digidrops — Passports, Stardust, quests, multipliers, or leaderboard rankings — represents:',
       '• An investment',
       '• A security',
       '• A financial product',
@@ -38,8 +38,8 @@ const SECTIONS: TermSection[] = [
     id: 'third-party',
     title: '3. Third-Party Applications',
     content: [
-      'Digidrops travels alongside third-party systems such as blockchain networks (including BNB Smart Chain), wallet providers, and infrastructure services.',
-      'We do not command these systems and accept no responsibility for:',
+      'Digidrops integrates third-party systems including BNB Chain, wallet providers, and infrastructure services.',
+      'We do not control these systems and are not responsible for:',
       '• Wallet security or private key management',
       '• Network delays, congestion, or outages',
       '• Gas fees or failed transactions',
@@ -50,7 +50,7 @@ const SECTIONS: TermSection[] = [
     id: 'rights-grant',
     title: '4. Rights You Grant to Us',
     content: [
-      'By entering the constellation, you grant Digidrops a limited, non-exclusive right to:',
+      'By using Digidrops, you grant us a limited, non-exclusive right to:',
       '• Verify Pass ownership to enable access',
       '• Record quest activity for continuity and fairness',
       '• Display anonymized participation metrics within community features',
@@ -83,16 +83,12 @@ export default function DashboardTermsPage() {
   }, []);
 
   return (
-    <main
-      className="min-h-screen w-full scroll-smooth bg-[#0B0B0B] font-chakra text-white"
-      style={{
-        backgroundImage:
-          'linear-gradient(179.5deg, rgba(59, 31, 131, 0.2) 0.44%, rgba(0, 74, 173, 0.3) 49.67%, rgba(28, 28, 28, 0.6) 99.57%), url("/assets/bg.png")',
-        backgroundAttachment: 'fixed',
-        backgroundSize: 'cover',
-      }}
-    >
-      <div className="container mx-auto px-6 py-12 lg:px-12">
+    <main className='relative min-h-screen w-full scroll-smooth bg-[#0B0B0B] font-chakra text-white bg-[url("/assets/bg/terms%20bg.webp")] bg-cover bg-center bg-no-repeat bg-fixed overflow-hidden'>
+      {/* Ambient glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute inset-0 bg-black/70 pointer-events-none" />
+
+      <div className="container mx-auto px-6 py-12 lg:px-12 relative z-10">
         {/* BACK TO FLIGHT DECK BUTTON */}
         <div className="mb-10">
           <Link href="/dashboard">
@@ -128,7 +124,7 @@ export default function DashboardTermsPage() {
                       }}
                       className={`block text-lg transition-all duration-300 ${
                         activeId === section.id
-                          ? 'translate-x-2 font-bold text-purple-400'
+                          ? 'translate-x-2 font-bold text-blue-400 drop-shadow-[0_0_10px_rgba(96,165,250,0.5)]'
                           : 'text-gray-400 hover:text-white'
                       }`}
                     >
@@ -157,14 +153,24 @@ export default function DashboardTermsPage() {
                     {section.title}
                   </h2>
                   <div className="space-y-4">
-                    {section.content.map((paragraph, idx) => (
-                      <p
-                        key={idx}
-                        className="text-base leading-relaxed text-gray-300 sm:text-lg"
-                      >
-                        {paragraph}
-                      </p>
-                    ))}
+                    {section.content.map((paragraph, idx) => {
+                      if (paragraph.startsWith('•')) {
+                        return (
+                          <div key={idx} className="flex items-start gap-3 text-base leading-relaxed text-gray-300 sm:text-lg pl-4">
+                            <span className="text-blue-400 font-bold mt-1.5 text-xs">●</span>
+                            <span>{paragraph.replace(/^•\s*/, '')}</span>
+                          </div>
+                        );
+                      }
+                      return (
+                        <p
+                          key={idx}
+                          className="text-base leading-relaxed text-gray-300 sm:text-lg"
+                        >
+                          {paragraph}
+                        </p>
+                      );
+                    })}
                   </div>
                 </article>
               ))}

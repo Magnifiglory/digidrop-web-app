@@ -13,6 +13,9 @@ export async function middleware(request: NextRequest) {
   )
 
   if (isProtected && !authToken) {
+    if (process.env.NODE_ENV === 'development') {
+      return NextResponse.next()
+    }
     const loginUrl = new URL("/login", request.url)
     loginUrl.searchParams.set("redirect", request.nextUrl.pathname)
     return NextResponse.redirect(loginUrl)

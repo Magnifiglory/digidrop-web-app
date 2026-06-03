@@ -11,6 +11,8 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useUserStore } from "@/store/useUserProfile"
 import { useProfileStats } from "@/hooks/useGetProfileStats"
 import { useProfile } from "@/hooks/useProfile"
+import { faqItems, PLAY_STEPS } from "@/lib/constants/shared-data"
+import EditProfileClient from "../(membership)/profile/_components/EditProfileClient"
 
 // ============================================================================
 // DATA
@@ -28,56 +30,6 @@ type NavLink =
       highlight?: boolean
       onClick: () => void
     }
-const FAQ_DATA = [
-  {
-    question: "What awaits in Digidrop?",
-    answer: "A boundless haven for Web3 enthusiasts to connect, create, and celebrate through quests and digital collectibles.",
-  },
-  {
-    question: "Which network is Digidrops built on?",
-    answer: "We are powered by the BSC (BEP20). We chose this network to ensure lightning-fast transactions and minimal gas fees (usually <$0.10) for our community.",
-  },
-  {
-    question: "What is the benefit of the White or Gold Pass?",
-    answer: "While the Black Pass earns standard Stardust, the White Pass grants a x2 Multiplier and the Gold Pass grants a x4 Multiplier on all quest rewards.",
-  },
-  {
-    question: "Can I sell my Passport later?",
-    answer: "No. Your Passport is a Soulbound Token (SBT). It is permanently fused to your wallet address and is not a financial asset.",
-  },
-  {
-    question: "What is Stardust?",
-    answer: "A luminous marker of your engagement (XP). It holds no monetary value but grants you status and prestige within the fleet.",
-  },
-] as const
-
-const PLAY_STEPS = [
-  {
-    number: "1",
-    title: "Signal (Awaken Your Comms)",
-    desc: "Connect your wallet (Metamask, Trust Wallet) and switch your network to BNB Smart Chain (BEP20).",
-  },
-  {
-    number: "2",
-    title: "Supply (Select Your Engine)",
-    desc: "Choose your speed. Mint a Black (1x), White (2x), or Gold (4x) Passport. Higher tiers gather Stardust faster.",
-  },
-  {
-    number: "3",
-    title: "Action (Embark on Quests)",
-    desc: "Dive into captivating challenges that spark creativity and community spirit.",
-  },
-  {
-    number: "4",
-    title: "Ascension (Rise in Rank)",
-    desc: "Watch your Stardust shine among the brightest explorers in the universe.",
-  },
-  {
-    number: "5",
-    title: "Expansion (Summon Allies)",
-    desc: "Share your referral beacon to guide others, weaving a richer tapestry of shared discovery.",
-  },
-] as const
 
 // ============================================================================
 // SUB-COMPONENTS
@@ -91,9 +43,9 @@ interface StepItemProps {
 
 const StepItem = ({ number, title, desc }: StepItemProps) => (
   <div className="flex gap-3 sm:gap-4">
-    <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-purple-600 text-xs sm:text-sm font-bold text-white">
+    <span className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full border border-purple-500/30 bg-purple-900/40 text-xs sm:text-sm font-bold text-purple-300">
       {number}
-    </div>
+    </span>
     <div className="space-y-1 flex-1">
       <h4 className="font-bold text-sm sm:text-base text-gray-100">{title}</h4>
       <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">{desc}</p>
@@ -101,20 +53,7 @@ const StepItem = ({ number, title, desc }: StepItemProps) => (
   </div>
 )
 
-interface FAQItemProps {
-  question: string
-  answer: string
-}
-
-const FAQItem = ({ question, answer }: FAQItemProps) => (
-  <div className="rounded-lg border border-white/5 bg-white/5 p-3 sm:p-4 transition-colors hover:border-white/10 hover:bg-white/[0.07]">
-    <h4 className="mb-2 flex items-start gap-2 font-bold text-sm sm:text-base text-[#CB6CE6]">
-      <ChevronRight size={16} className="shrink-0 mt-0.5" />
-      <span className="flex-1">{question}</span>
-    </h4>
-    <p className="pl-6 text-xs sm:text-sm leading-relaxed text-gray-300">{answer}</p>
-  </div>
-)
+// FAQItem removed to support unified interactive accordion styles directly inside the modal body
 
 // ============================================================================
 // MAIN COMPONENT
@@ -125,8 +64,10 @@ const DashboardNavbar = () => {
   const [isBetaDialogOpen, setIsBetaDialogOpen] = useState(false)
   const [isHowToPlayDialogOpen, setIsHowToPlayDialogOpen] = useState(false)
   const [isFAQDialogOpen, setIsFAQDialogOpen] = useState(false)
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
+  const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false)
 
   // Data Hooks
   useProfile()
@@ -181,12 +122,12 @@ const DashboardNavbar = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#0B0B0B]/95 backdrop-blur-sm">
-        <div className="mx-auto flex h-16 sm:h-20 lg:h-[80px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+      <header className="sticky top-0 z-50 h-16 w-full bg-[#0a0b1c]/70 backdrop-blur-md font-chakra text-gray-200">
+        <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
           
           {/*Logo */}
           <div className="flex items-center gap-2 sm:gap-4 min-w-0">
-            <Link href="/#" className="shrink-0">
+            <Link href="/dashboard" className="shrink-0">
               <Image 
                 src="/assets/logo.png" 
                 alt="Digidrops Logo" 
@@ -202,7 +143,7 @@ const DashboardNavbar = () => {
             <div className="hidden sm:flex items-center gap-2 lg:gap-3 min-w-0">
 
               {/*profile Link */}
-              <Link href = "/profile/edit">
+              <button onClick={() => setIsProfileDialogOpen(true)} className="focus:outline-none">
               {profile?.avatar ? (
                 
                 <img 
@@ -215,7 +156,7 @@ const DashboardNavbar = () => {
                 <CircleUser size={24} className="text-[#CB6CE6] shrink-0 lg:w-7 lg:h-7" />
               )}
               
-              </Link>
+              </button>
 
               <div className="flex items-center gap-2 min-w-0">
                 <p className="text-xs lg:text-sm text-gray-200 font-mono truncate">
@@ -237,7 +178,7 @@ const DashboardNavbar = () => {
           </div>
 
           {/* CENTER: Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-4 xl:gap-6 font-chakra text-sm uppercase text-white">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-6 font-chakra text-sm text-gray-200">
             {navLinks.map((link) => (
               link.onClick ? (
                 <button 
@@ -268,7 +209,7 @@ const DashboardNavbar = () => {
             <Button 
               variant="outline" 
               onClick={() => setIsBetaDialogOpen(true)} 
-              className="border-purple-500/50 bg-purple-400 text-gray hover:bg-purple-500 text-sm"
+              className="border-purple-500/50 bg-purple-400 text-black hover:bg-purple-500 text-sm"
             >
               Beta
             </Button>
@@ -307,7 +248,7 @@ const DashboardNavbar = () => {
             
             <SheetContent 
               side="right" 
-              className="w-[85vw] max-w-sm border-l border-white/10 bg-[#0B0B0B] text-white p-0"
+              className="w-[85vw] max-w-sm border-l border-white/10 bg-[#0B0B0B]/40 backdrop-blur-md text-white p-0"
             >
               <div className="flex flex-col h-full">
                 
@@ -316,7 +257,7 @@ const DashboardNavbar = () => {
                   <div className="flex justify-start gap-2">
                     <div className="flex items-center gap-2 sm:gap-3 min-w-0">
 
-                      <Link href = "/profile/edit">
+                      <button onClick={() => { setIsMobileMenuOpen(false); setIsProfileDialogOpen(true); }} className="focus:outline-none">
               {profile?.avatar ? (
                 
                 <img 
@@ -329,7 +270,7 @@ const DashboardNavbar = () => {
                 <CircleUser size={24} className="text-[#CB6CE6] shrink-0 lg:w-7 lg:h-7" />
               )}
               
-              </Link>
+              </button>
 
                       {/*Wellet Address*/}
                       
@@ -356,7 +297,7 @@ const DashboardNavbar = () => {
                 </div>
 
                 {/* Mobile Navigation */}
-                <nav className="flex-1 flex flex-col gap-4 sm:gap-6 p-4 sm:p-6 font-chakra text-base sm:text-lg uppercase">
+                <nav className="flex-1 flex flex-col gap-4 sm:gap-6 p-4 sm:p-6 font-chakra text-base sm:text-lg font-semibold text-gray-200">
                   {navLinks.map((link) => (
                     link.onClick ? (
                       <button 
@@ -479,10 +420,19 @@ const DashboardNavbar = () => {
               className="flex max-h-[85vh] w-full max-w-sm sm:max-w-md lg:max-w-xl flex-col overflow-hidden rounded-xl border border-white/10 bg-[#181818] shadow-2xl font-chakra"
             >
               {/* Header */}
-              <div className="border-b border-white/10 px-4 sm:px-6 py-4 sm:py-5 text-center">
+              <div className="flex items-center justify-between border-b border-white/10 px-4 sm:px-6 py-4 sm:py-5">
                 <h2 className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-xl sm:text-2xl font-bold uppercase text-transparent">
                   Welcome to Digiverse
                 </h2>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={() => closeModal(setIsHowToPlayDialogOpen)} 
+                  className="text-gray-400 hover:text-purple-400 hover:bg-white/5 h-8 w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center transition-colors"
+                  aria-label="Close How to Play"
+                >
+                  <X size={20} />
+                </Button>
               </div>
               
               {/* Content */}
@@ -493,10 +443,10 @@ const DashboardNavbar = () => {
               </div>
               
               {/* Footer */}
-              <div className="border-t border-white/10 px-6 py-4 text-right">
+              <div className="border-t border-white/10 px-6 py-4 text-right bg-[#121212]">
                 <Button 
                   onClick={() => closeModal(setIsHowToPlayDialogOpen)} 
-                  className="bg-purple-600 hover:bg-purple-500 text-right"
+                  className="bg-purple-600 hover:bg-purple-500 font-semibold rounded-xl text-white"
                 >
                   Close
                 </Button>
@@ -508,7 +458,7 @@ const DashboardNavbar = () => {
         {/* FAQ Modal */}
         {isFAQDialogOpen && (
           <div 
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-sm bg-black/80" 
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-sm bg-black/80 font-chakra text-white" 
             onClick={() => closeModal(setIsFAQDialogOpen)}
           >
             <motion.div 
@@ -516,41 +466,110 @@ const DashboardNavbar = () => {
               animate={{ scale: 1, opacity: 1 }} 
               exit={{ scale: 0.95, opacity: 0 }} 
               onClick={(e) => e.stopPropagation()} 
-              className="flex max-h-[85vh] w-full max-w-sm sm:max-w-lg lg:max-w-2xl flex-col overflow-hidden rounded-xl border border-white/10 bg-[#181818] shadow-2xl font-chakra"
+              className="flex max-h-[85vh] w-full max-w-sm sm:max-w-lg lg:max-w-2xl flex-col overflow-hidden rounded-xl border border-white/10 bg-[#181818] shadow-2xl"
             >
               {/* Header */}
               <div className="flex items-center justify-between border-b border-white/10 px-4 sm:px-6 py-4 sm:py-5">
-                <h2 className="text-lg sm:text-2xl font-bold uppercase text-white">
-                  Transmission Log
+                <h2 className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-xl sm:text-2xl font-bold uppercase text-transparent">
+                  FAQ
                 </h2>
                 <Button 
                   variant="ghost" 
                   size="icon" 
                   onClick={() => closeModal(setIsFAQDialogOpen)} 
-                  className="text-gray-400 hover:text-white h-8 w-8 sm:h-10 sm:w-10"
+                  className="text-gray-400 hover:text-purple-400 hover:bg-white/5 h-8 w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center transition-colors"
                   aria-label="Close FAQ"
                 >
                   <X size={20} />
                 </Button>
               </div>
               
-              {/* Content */}
-              <div className="overflow-y-auto p-4 sm:p-6 space-y-3 sm:space-y-4">
-                {FAQ_DATA.map((faq, index) => (
-                  <FAQItem key={index} {...faq} />
+              {/* Content - Interactive Accordions with premium Obsidian theme matches */}
+              <div className="overflow-y-auto p-4 sm:p-6 space-y-3 sm:space-y-4 scrollbar-thin scrollbar-thumb-purple-900 scrollbar-track-transparent">
+                {faqItems.map((faq, index) => (
+                  <div
+                    key={index}
+                    className="overflow-hidden rounded-xl bg-black/50 border border-white/10 transition-colors duration-300"
+                  >
+                    <button
+                      onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
+                      className="flex w-full items-start justify-between gap-4 px-5 py-4 text-left font-chakra"
+                    >
+                      <span className={`text-sm font-semibold sm:text-base transition-colors duration-300 ${
+                        openFaqIndex === index ? "text-purple-400" : "text-white hover:text-purple-400"
+                      }`}>
+                        {faq.question}
+                      </span>
+                      <ChevronRight
+                        className={`mt-0.5 h-4 w-4 flex-shrink-0 text-gray-400 transition-transform duration-300 ${
+                          openFaqIndex === index ? "rotate-90 text-[#CB6CE6]" : ""
+                        }`}
+                      />
+                    </button>
+
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{
+                        height: openFaqIndex === index ? "auto" : 0,
+                        opacity: openFaqIndex === index ? 1 : 0,
+                      }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <p className="px-5 pb-5 pt-1 text-sm leading-relaxed text-gray-300 font-chakra leading-relaxed">
+                        {faq.answer}
+                      </p>
+                    </motion.div>
+                  </div>
                 ))}
               </div>
               
               {/* Footer */}
-              <div className="border-t border-white/10 p-3 sm:p-4 bg-[#121212]">
-                <p className="text-center text-xs text-gray-500">
+              <div className="flex flex-col sm:flex-row items-center justify-between border-t border-white/10 p-4 sm:px-6 sm:py-4 bg-[#121212] gap-4">
+                <p className="text-center sm:text-left text-xs text-gray-500">
                   Need more help? Join our{" "}
-                  <span className="text-purple-400 cursor-pointer underline hover:text-purple-500 transition-colors">
-                    Discord channel
-                  </span>
+                  <a 
+                    href="https://t.me/Digidrops_xyz" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-purple-400 cursor-pointer underline hover:text-purple-500 transition-colors"
+                  >
+                    Telegram channel
+                  </a>
                   .
                 </p>
+                <Button 
+                  onClick={() => closeModal(setIsFAQDialogOpen)} 
+                  className="bg-purple-600 hover:bg-purple-500 font-semibold rounded-xl text-white w-full sm:w-auto"
+                >
+                  Close
+                </Button>
               </div>
+            </motion.div>
+          </div>
+        )}
+        {/* Edit Profile Modal */}
+        {isProfileDialogOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-sm bg-black/80 font-chakra text-white">
+            <motion.div 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }} 
+              onClick={() => setIsProfileDialogOpen(false)} 
+              className="absolute inset-0 bg-black/90 backdrop-blur-md" 
+            />
+            
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0 }} 
+              animate={{ scale: 1, opacity: 1 }} 
+              exit={{ scale: 0.95, opacity: 0 }} 
+              onClick={(e) => e.stopPropagation()} 
+              className="relative w-full max-w-md z-10"
+            >
+              <EditProfileClient 
+                onClose={() => setIsProfileDialogOpen(false)} 
+                onBackToDashboard={() => setIsProfileDialogOpen(false)} 
+              />
             </motion.div>
           </div>
         )}

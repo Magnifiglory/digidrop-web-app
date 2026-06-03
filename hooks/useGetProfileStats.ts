@@ -4,7 +4,7 @@ async function fetchProfileStats() {
   const res = await fetch('/api/profile/stats', {
     cache: 'no-store',
   });
-  console.log("response:", res)
+  if (!res.ok) throw new Error('Failed to fetch profile stats');
   return res.json();
 }
 

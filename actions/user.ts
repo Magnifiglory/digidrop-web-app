@@ -13,15 +13,21 @@ export async function getNonce() {
     }
 }
 
-export async function walletLogin(walletAddress: string, signature: string, nonce: string, ref?:string) {
-  const payload: any = {
-  walletAddress,
-  signature,
-  nonce
+type LoginPayload = {
+  walletAddress: string;
+  signature: string;
+  nonce: string;
+  referral?: string;
 };
 
-if (ref) payload.preferral = ref;
-console.log("login payload:", payload)
+export async function walletLogin(walletAddress: string, signature: string, nonce: string, ref?: string) {
+  const payload: LoginPayload = {
+    walletAddress,
+    signature,
+    nonce,
+  };
+
+  if (ref) payload.referral = ref;
   try {
     const { data } = await apiClient.post('/login', payload, { withCredentials: true }); // Use apiClient here
     await setToken(data.token); // Assuming you have setRefreshToken too if needed

@@ -9,6 +9,7 @@ import { parseEther, formatEther } from 'viem';
 import { useRouter } from 'next/navigation';
 import { PassInfo } from '@/types/response-type';
 import { Button } from '@/components/ui/button';
+import { ConnectWalletButton } from '@/components/common/WalletConnectButton';
 
 
 
@@ -154,9 +155,13 @@ useEffect(() => {
       </div>
 
       {!address ? (
-        <p className="text-red-500 text-center">
-          Connect wallet to mint
-        </p>) : !hasEnough ? (
+        <div className="flex flex-col items-center gap-3 p-4 bg-white/[0.02] border border-white/10 rounded-2xl">
+          <p className="text-sm text-gray-400 text-center font-chakra">
+            Connect wallet to mint your access pass
+          </p>
+          <ConnectWalletButton />
+        </div>
+      ) : !hasEnough ? (
         <div className="border border-red-300 rounded-lg p-6 text-center">
           <p className="text-red-700 font-bold text-xl">Insufficient BNB Balance</p>
           <p className="text-sm mt-2">
@@ -175,7 +180,7 @@ useEffect(() => {
         <button
           onClick={handleMint}
           disabled={localMinting || isWriting || isConfirming}
-          className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 rounded-xl text-lg disabled:opacity-50"
+          className="w-auto mx-auto block max-w-max px-8 py-2.5 text-sm font-semibold rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white shadow-md active:scale-95 transition-all disabled:opacity-50"
         >
            {isWriting
               ? 'Waiting for wallet…'

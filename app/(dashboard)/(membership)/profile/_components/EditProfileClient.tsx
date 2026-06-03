@@ -18,6 +18,7 @@ import { useForm } from 'react-hook-form';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { updateProfile } from "@/actions/user";
+import { logout } from "@/lib/auth";
 import { toast } from "sonner";
 import { apiClient } from "@/apiClient/client";
 import { Camera, ChevronDown, ChevronUp, Loader2, X } from "lucide-react";
@@ -74,8 +75,8 @@ const EditProfileClient = ({ onClose, onBackToDashboard }: EditProfileModalProps
       // Update global state
       setProfile({
         ...profile!,
-        names: updatedProfile.names!,
-        email: updatedProfile.email!,
+        names: values.names,
+        email: values.email,
         avatar: avatarOptions.find(a => a.id === selectedAvatarId)!,
       });
 
@@ -96,16 +97,15 @@ const EditProfileClient = ({ onClose, onBackToDashboard }: EditProfileModalProps
  
 
   const selectedAvatarUrl = avatarOptions.find(a => a.id === selectedAvatarId)?.image_url;
-  console.log("avatar url:", selectedAvatarUrl)
-  const isAvatarDirty = selectedAvatarId !== profile?.avatar.id;
+  const isAvatarDirty = selectedAvatarId !== profile?.avatar?.id;
 const canSave = form.formState.isDirty || isAvatarDirty;
   return (
     <div className="w-full max-w-md mx-auto p-4 flex items-center justify-center min-h-[50vh]">
-      <div className="relative w-full bg-[#0a0a0a] rounded-2xl p-6 sm:p-8 shadow-2xl border border-white/10 animate-in fade-in zoom-in duration-300">
+      <div className="relative w-full bg-black/50 backdrop-blur-md rounded-2xl p-6 sm:p-8 shadow-2xl border border-white/10 animate-in fade-in zoom-in duration-300">
 
         {/* Close */}
         <button
-          // onClick={onClose}
+          onClick={onClose || (() => router.push('/dashboard'))}
           className="absolute top-4 right-4 text-muted-foreground hover:text-white hover:bg-white/10 p-2 rounded-full transition-all z-10"
         >
           <X className="w-5 h-5" />
@@ -181,15 +181,37 @@ const canSave = form.formState.isDirty || isAvatarDirty;
         </div>
 
         {/* Footer */}
-        <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-4 mt-10 pt-6 border-t border-white/5">
-          <Button
-            variant="ghost"
-            disabled={isLoading}
-            className="w-full sm:w-auto text-muted-foreground hover:text-white hover:bg-white/5"
-            onClick={onBackToDashboard}
-          >
-            Back to Dashboard
-          </Button>
+        <div className="flex flex-col gap-4 sm:flex-row items-center justify-between mt-10 pt-6 border-t border-white/5">
+          <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-start">
+            <Button
+              variant="ghost"
+              disabled={isLoading}
+              className="text-muted-foreground hover:text-white hover:bg-white/5"
+              onClick={onBackToDashboard || (() => router.push('/dashboard'))}
+            >
+              Back
+            </Button>
+
+            <Button
+              variant="ghost"
+              disabled={isLoading}
+              className="bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500 hover:text-white transition-all text-xs font-semibold px-4 py-2 rounded-xl"
+              onClick={async () => {
+                setIsLoading(true);
+                try {
+                  await logout();
+                  toast.success("Logged out successfully");
+                  window.location.href = "/";
+                } catch {
+                  toast.error("Failed to log out");
+                } finally {
+                  setIsLoading(false);
+                }
+              }}
+            >
+              Log Out
+            </Button>
+          </div>
 
           <Button
             disabled={isLoading || !canSave}

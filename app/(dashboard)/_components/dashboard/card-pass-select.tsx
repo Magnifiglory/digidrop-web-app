@@ -17,19 +17,25 @@ const MintPass = ({ data }: CardPassProp) => {
     const currentPassPower = profile?.current_pass_power ?? 0;
     const currentPassId = profile?.current_pass_id;
     const isCurrent = currentPassId === data.id;
-    const isLocked = profile?.has_pass && data.point_power <= currentPassPower;
+    const isLocked = process.env.NODE_ENV !== 'development' && profile?.has_pass && data.point_power <= currentPassPower;
     const router = useRouter()
     
     const handleClick = () => {
-        if (isLocked || isCurrent) return;
+        if (isLocked) return;
         router.push(`/mint-pass/${data.id}`);
     };
 
     // Determine neon glow colors and float parameters based on tier
     const getTierGlow = () => {
-        if (data.point_power === 4) return "hover:shadow-[0_0_35px_rgba(234,179,8,0.35)] hover:border-yellow-500/30";
+        if (data.point_power === 4) return "hover:shadow-[0_0_40px_rgba(245,158,11,0.45)] hover:border-yellow-500/40";
         if (data.point_power === 2) return "hover:shadow-[0_0_35px_rgba(6,182,212,0.35)] hover:border-cyan-500/30";
         return "hover:shadow-[0_0_35px_rgba(168,85,247,0.35)] hover:border-purple-500/30";
+    };
+
+    const getAmbientGlow = () => {
+        if (data.point_power === 4) return "bg-yellow-500/10 group-hover:bg-yellow-500/25 blur-[35px]";
+        if (data.point_power === 2) return "bg-cyan-500/5 group-hover:bg-cyan-500/20 blur-[30px]";
+        return "bg-purple-500/5 group-hover:bg-purple-500/20 blur-[30px]";
     };
 
     const idAsNumber = typeof data.id === 'number' ? data.id : parseInt(String(data.id)) || 0;
@@ -56,28 +62,33 @@ const MintPass = ({ data }: CardPassProp) => {
                 delay: floatDelay
               }
             }}
-            className={cn(
+             className={cn(
                 // Mobile-First Layout & Font
                 "relative flex flex-col items-center font-chakra transition-all duration-500 holo-card-hover",
-                "w-full max-w-[280px] sm:max-w-[320px] mx-auto", 
-                "p-5 sm:p-8", 
+                "w-full max-w-[240px] sm:max-w-[280px] lg:max-w-[230px] xl:max-w-[260px] mx-auto", 
+                "p-4 sm:p-6 lg:p-4 xl:p-5", 
                 
                 // Glassmorphism Aesthetic
-                "bg-zinc-900/40 backdrop-blur-2xl border border-white/10 rounded-[28px] sm:rounded-[32px] holo-card-shine",
+                "bg-zinc-900/40 backdrop-blur-2xl border border-white/10 rounded-[24px] sm:rounded-[28px] holo-card-shine",
                 
                 // States & Animations
                 isLocked && "cursor-not-allowed opacity-40 grayscale pointer-events-none",
                 !isLocked && !isCurrent && cn("cursor-pointer hover:bg-white/[0.02] hover:-translate-y-2 active:scale-95", getTierGlow()),
-                isCurrent && "border-white/40 bg-white/[0.05] shadow-[0_0_30px_rgba(255,255,255,0.05)]"
+                isCurrent && cn(
+                    "border-white/40 bg-white/[0.05] shadow-[0_0_30px_rgba(255,255,255,0.05)] transition-all duration-500 hover:-translate-y-2",
+                    getTierGlow()
+                )
             )}
         >
             {/* Header: Name */}
-            <h3 className="text-[11px] font-bold text-base sm:text-lg tracking-widest text-white uppercase mb-6 sm:mb-8 text-center">
+            <h3 className="text-[10px] font-bold text-xs sm:text-sm lg:text-xs xl:text-sm tracking-widest text-white uppercase mb-4 sm:mb-6 lg:mb-3 xl:mb-4 text-center">
                 {data.name}
             </h3>
 
             {/* Card Visual: Slanted/Floating Container */}
-            <div className="relative w-full aspect-[2/3] mb-6 sm:mb-8 group">
+            <div className="relative w-full aspect-[2/3] mb-4 sm:mb-6 lg:mb-3 xl:mb-4 group flex justify-center items-center">
+                {/* Background Glow Halo */}
+                <div className={cn("absolute w-[80%] h-[80%] rounded-full transition-all duration-500 pointer-events-none", getAmbientGlow())} />
                 <div className="relative h-full w-full transition-transform duration-700 group-hover:scale-105">
                     <Image 
                         src={data.card} 

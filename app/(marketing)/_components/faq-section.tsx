@@ -3,6 +3,7 @@
 import React, { useState } from "react"
 import { ChevronRight } from "lucide-react"
 import { motion } from "framer-motion" // Changed from "motion/react" to "framer-motion" (Standard import)
+import { faqItems } from "@/lib/constants/shared-data"
 
 // 1. ADD THIS DEFINITION HERE
 const fadeUp = {
@@ -14,34 +15,6 @@ const fadeUp = {
   },
 };
 
-const faqs = [
-  {
-    question: "What awaits in Digidrop?",
-    answer:
-      "A boundless haven for Web3 enthusiasts to connect, create, and celebrate through quests and digital collectibles.",
-  },
-  {
-    question: "Which network is Digidrops built on?",
-    answer:
-      "We are powered by the BSC (BEP20). We chose this network to ensure lightning-fast transactions and minimal gas fees (usually <$0.10) for our community.",
-  },
-  {
-    question: "What is the benefit of the White or Gold Pass?",
-    answer:
-      "While the Black Pass earns standard Stardust, the White Pass grants a x2 Multiplier and the Gold Pass grants a x4 Multiplier on all quest rewards. If a quest gives 100 Stardust, a Gold user earns 400 instantly.",
-  },
-  {
-    question: "Can I sell my Passport later?",
-    answer:
-      "No. Your Passport is a Soulbound Token (SBT). It is permanently fused to your wallet address. It is not a financial asset to be traded; it is your immutable reputation and legacy in our world.",
-  },
-  {
-    question: "What is Stardust?",
-    answer:
-      "A luminous marker of your engagement (XP). It holds no monetary value but grants you status and prestige within the fleet.",
-  },
-]
-
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
@@ -50,9 +23,9 @@ const FAQ = () => {
   }
 
   return (
-    <section id="FAQs" className="w-full py-12 font-chakra">
+    <section id="FAQs" className="w-full py-16 font-chakra">
       {/* Container */}
-      <div className="mx-auto max-w-6xl px-6 sm:px-10 md:px-20 lg:px-28 xl:px-36">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 md:px-8">
         
         {/* Heading */}
         <motion.div 
@@ -60,11 +33,14 @@ const FAQ = () => {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeUp} 
-          className="mb-16 text-center md:text-left"
+          className="mb-12 text-center"
         >
-          <h2 className="text-3xl font-bold text-white uppercase sm:text-4xl md:text-5xl">
+          <h2 className="text-3xl font-extrabold text-white uppercase tracking-wider sm:text-4xl md:text-5xl bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent pb-2">
             Frequently Asked Questions
           </h2>
+          <p className="mt-2 text-sm text-gray-400 uppercase tracking-widest sm:text-base">
+            Everything you need to know about Digidrops
+          </p>
         </motion.div>
 
         {/* Divider */}
@@ -72,23 +48,25 @@ const FAQ = () => {
 
         {/* FAQ List */}
         <div className="space-y-4">
-          {faqs.map((faq, index) => (
+          {faqItems.map((faq, index) => (
             <div
               key={index}
-              className="overflow-hidden rounded-2xl bg-[#1C1C1C]/95"
+              className="overflow-hidden rounded-2xl bg-black/50 border border-white/10 backdrop-blur-md transition-all duration-300 hover:border-purple-500/30"
             >
               {/* Accordion Header */}
               <button
                 onClick={() => toggleAccordion(index)}
                 className="flex w-full items-start justify-between gap-6 px-6 py-6 text-left transition sm:px-8"
               >
-                <span className="text-lg font-medium text-white sm:text-xl font-chakra">
+                <span className={`text-lg font-medium sm:text-xl font-chakra transition-colors duration-300 ${
+                  openIndex === index ? "text-purple-400" : "text-white"
+                }`}>
                   {faq.question}
                 </span>
 
                 <ChevronRight
                   className={`mt-1 h-5 w-5 flex-shrink-0 text-gray-400 transition-transform duration-300 ${
-                    openIndex === index ? "rotate-90" : ""
+                    openIndex === index ? "rotate-90 text-[#CB6CE6]" : ""
                   }`}
                 />
               </button>

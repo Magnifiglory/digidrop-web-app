@@ -45,10 +45,12 @@ export interface DigiPass {
 export interface TaskResponse {
   id: number
   icon: string,
-  title: string, 
+  title: string,
   points: number,
   external_link: string
   task_type?: 'on_site' | 'off_site',
   is_active: boolean
   user_status: 'pending' | 'started' | 'completed';
+  /** ISO timestamp set by the server when the task was started (optional) */
+  started_at?: string;
 }

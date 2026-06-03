@@ -20,6 +20,9 @@ const chakra = Chakra_Petch({
 export const metadata: Metadata = {
   title: "Digidrops | The Sybil-Resistant Human Layer of BNB Chain",
   description: "Digidrops is the gamified infrastructure and sybil-resistant 'Human Layer' of the BNB Chain. Proving human identity via tiered Soulbound Passports (Black, White, Gold SBTs) to solve bot-driven Web3 growth and supply verified data for decentralized AI.",
+  icons: {
+    icon: "/assets/favicon (1).webp",
+  },
   keywords: [
     "Digidrops",
     "BNB Chain",
