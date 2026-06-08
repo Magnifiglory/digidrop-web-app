@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useCallback } from "react"
 import { 
-  ArrowUpIcon, User, Search, Bell, Home, Calendar, BookOpen, 
-  CheckCircle2, ChevronDown, Compass, Award, ExternalLink, Moon, Sun, ShieldCheck,
+  ArrowUpIcon, User, Search, Bell, Home, BookOpen,
+  Award, ShieldCheck,
   Copy, Check, X, ChevronRight, PlayCircle, Share2, Menu
 } from "lucide-react"
 import { useRouter } from "next/navigation"

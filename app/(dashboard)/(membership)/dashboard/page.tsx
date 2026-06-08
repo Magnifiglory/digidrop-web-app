@@ -1,6 +1,6 @@
 import React from 'react'
 import DashboardClient from '../../_components/dashboard/dashboard-client'
-import { getProfile, getProfileStats } from '@/app/data/profile/profile';
+import { getProfile } from '@/app/data/profile/profile';
 
 
 

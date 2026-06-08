@@ -1,5 +1,4 @@
 "use client"
-import { Play } from 'lucide-react'
 import React from 'react'
 import { useStartTask } from '@/hooks/useStartQuest';
 import { useCompleteTask } from '@/hooks/useCompleteQuest';

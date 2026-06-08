@@ -3,8 +3,6 @@
 import { apiClient } from "@/apiClient/client";
 import { setRefreshToken, setToken } from "@/lib/auth";
 
-const MOCK_WALLET = "0x0000000000000000000000000000000000000000";
-
 export async function getNonce() {
     if (process.env.NODE_ENV === 'development') {
         return { nonce: "dev-mock-nonce-123", message: "Welcome to Digidrops!\n\nSign this message to verify ownership of your wallet.\n\nNonce: dev-mock-nonce-123" };
