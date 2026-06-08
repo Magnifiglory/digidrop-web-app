@@ -415,7 +415,7 @@ const DashboardUi = () => {
               </div>
 
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-wide font-chakra uppercase leading-tight bg-gradient-to-r from-blue-400 to-pink-500 bg-clip-text text-transparent text-center mx-auto w-full">
-                Welcome to our Digiverse
+                Welcome {profile?.names || 'Voyager'}
               </h1>
               <p className="text-xs sm:text-sm md:text-base text-gray-200 max-w-md md:max-w-xl leading-relaxed text-center mx-auto">
                 You are a pioneer copilot, engage continuously with our quest and keep broadcasting everything on our official @digidrops_xyz as we collectively growing our digiverse and you keep gathering unlimited stardust and continuously build your reputation.
