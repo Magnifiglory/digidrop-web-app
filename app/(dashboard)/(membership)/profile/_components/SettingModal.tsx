@@ -269,7 +269,7 @@ const SettingsModal = ({
           </button>
 
           <div className={cn(
-            "w-full grid grid-cols-5 gap-3 mt-4 overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] bg-white/5 rounded-xl px-2",
+            "w-full grid grid-cols-5 gap-3 mt-4 overflow-hidden transition-all duration-500 [transition-timing-function:cubic-bezier(0.4,0,0.2,1)] bg-white/5 rounded-xl px-2",
             isAvatarMenuOpen ? "max-h-[300px] py-4 opacity-100 border border-white/10" : "max-h-0 py-0 opacity-0 border-none"
           )}>
             {avatarOptions.map((avatar, index) => (

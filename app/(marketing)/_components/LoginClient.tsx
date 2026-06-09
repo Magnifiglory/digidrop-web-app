@@ -18,7 +18,7 @@ import { Button } from '@/components/ui/button'
 const LoginClient = () => {
   const { address, isConnected } = useAccount()
   const chainId = useChainId()
-  const disconnect = useDisconnect()
+  const { disconnect } = useDisconnect()
   const nonceRef = useRef<string | null>(null)
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -38,7 +38,7 @@ const LoginClient = () => {
     }))
   }, [])
 
-  const signMessage = useSignMessage({
+  const { signMessage } = useSignMessage({
     mutation: {
       onSuccess: async (signature) => {
         try {
@@ -54,7 +54,7 @@ const LoginClient = () => {
           router.replace('/post-login')
         } catch (err) {
           console.error(err)
-          disconnect.mutate()
+          disconnect()
           toast.error('Login failed')
         } finally {
           nonceRef.current = null
@@ -64,7 +64,7 @@ const LoginClient = () => {
       onError: () => {
         nonceRef.current = null
         toast.error('Signature rejected')
-        disconnect.mutate()
+        disconnect()
         setLoading(false)
       },
     },
@@ -85,7 +85,7 @@ const LoginClient = () => {
       const { nonce, message } = await getNonce()
       nonceRef.current = nonce
       setTimeout(() => {
-        signMessage.mutate({ message })
+        signMessage({ message })
       }, 100)
     } catch (err) {
       setLoading(false)
