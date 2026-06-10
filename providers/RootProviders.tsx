@@ -6,7 +6,7 @@ import { WagmiProvider } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { wagmiConfig } from '@/lib/wagmi-config';
 import { useEffect, useState } from 'react';
-import { bscTestnet } from "viem/chains";
+import { bscTestnet } from "@/lib/chain";
 
 
 const queryClient = new QueryClient();

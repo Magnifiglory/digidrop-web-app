@@ -1,5 +1,4 @@
 
-import { getToken } from "@/lib/auth"
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
@@ -21,8 +20,8 @@ function addSecurityHeaders(response: NextResponse, request: NextRequest): void 
   }
 }
 
-export async function middleware(request: NextRequest) {
-  const authToken =await getToken()
+export async function proxy(request: NextRequest) {
+  const authToken = request.cookies.get("accessToken")?.value
 
   const response = NextResponse.next()
   addSecurityHeaders(response, request)

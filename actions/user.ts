@@ -53,12 +53,12 @@ export async function walletLogin(walletAddress: string, signature: string, nonc
 type RequestPayload={
   names: string
   email: string
-  avatar_id: number
+  avatar_url?: string | null
 }
 
 export async function updateProfile(payload:RequestPayload) {
   if (process.env.NODE_ENV === 'development') {
-    return { success: true, names: payload.names, email: payload.email, avatar_id: payload.avatar_id };
+    return { success: true, names: payload.names, email: payload.email, avatar_url: payload.avatar_url };
   }
   try {
     const response = await apiClient.patch('/update-profile', payload);

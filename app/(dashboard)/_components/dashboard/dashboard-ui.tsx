@@ -203,8 +203,8 @@ const DashboardUi = () => {
               >
                 <div className="flex items-center gap-3">
                   <div className="relative h-10 w-10 rounded-xl overflow-hidden bg-[#FF00FF]/20 flex items-center justify-center border border-white/20 shrink-0">
-                    {profile?.avatar ? (
-                      <img src={profile.avatar.image_url} alt="Profile" className="w-full h-full object-cover" />
+                    {profile?.avatar_url ? (
+                      <img src={profile.avatar_url} alt="Profile" className="w-full h-full object-cover" />
                     ) : (
                       <span className="text-xs font-bold text-white uppercase">{profile?.names ? profile?.names[0] : "U"}</span>
                     )}
@@ -313,8 +313,8 @@ const DashboardUi = () => {
                 className="h-8 w-8 sm:h-9 sm:w-9 rounded-full overflow-hidden border border-white/20 bg-gradient-to-tr from-[#FF00FF] to-[#CB6CE6] p-[1px] focus:outline-none hover:border-white transition-all duration-300 shrink-0"
               >
                 <div className="w-full h-full rounded-full bg-[#0A0A12] flex items-center justify-center overflow-hidden">
-                  {profile?.avatar ? (
-                    <img src={profile.avatar.image_url} alt="Profile" className="w-full h-full object-cover" />
+                  {profile?.avatar_url ? (
+                    <img src={profile.avatar_url} alt="Profile" className="w-full h-full object-cover" />
                   ) : (
                     <User size={13} className="text-[#CB6CE6]" />
                   )}
@@ -380,8 +380,8 @@ const DashboardUi = () => {
               className="h-8 w-8 sm:h-9 sm:w-9 rounded-full overflow-hidden border border-white/20 bg-gradient-to-tr from-[#FF00FF] to-[#CB6CE6] p-[1px] focus:outline-none hover:border-white transition-all duration-300 shrink-0"
             >
               <div className="w-full h-full rounded-full bg-[#0A0A12] flex items-center justify-center overflow-hidden">
-                {profile?.avatar ? (
-                  <img src={profile.avatar.image_url} alt="Profile" className="w-full h-full object-cover" />
+                {profile?.avatar_url ? (
+                  <img src={profile.avatar_url} alt="Profile" className="w-full h-full object-cover" />
                 ) : (
                   <User size={13} className="text-[#CB6CE6]" />
                 )}
@@ -873,8 +873,8 @@ const DashboardUi = () => {
                     >
                       <div className="flex items-center gap-3">
                         <div className="relative h-10 w-10 rounded-xl overflow-hidden bg-[#FF00FF]/20 flex items-center justify-center border border-white/20 shrink-0">
-                          {profile?.avatar ? (
-                            <img src={profile.avatar.image_url} alt="Profile" className="w-full h-full object-cover" />
+                          {profile?.avatar_url ? (
+                            <img src={profile.avatar_url} alt="Profile" className="w-full h-full object-cover" />
                           ) : (
                             <span className="text-xs font-bold text-white uppercase">{profile?.names ? profile?.names[0] : "U"}</span>
                           )}

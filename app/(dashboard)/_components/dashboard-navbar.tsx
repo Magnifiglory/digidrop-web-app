@@ -144,10 +144,10 @@ const DashboardNavbar = () => {
 
               {/*profile Link */}
               <button onClick={() => setIsProfileDialogOpen(true)} className="focus:outline-none">
-              {profile?.avatar ? (
+              {profile?.avatar_url ? (
                 
                 <img 
-                  src={profile?.avatar.image_url} 
+                  src={profile.avatar_url} 
                   alt="Profile" 
                   className="w-6 h-6 lg:w-7 lg:h-7 rounded-full object-cover border border-[#CB6CE6]"
                 />
@@ -258,10 +258,10 @@ const DashboardNavbar = () => {
                     <div className="flex items-center gap-2 sm:gap-3 min-w-0">
 
                       <button onClick={() => { setIsMobileMenuOpen(false); setIsProfileDialogOpen(true); }} className="focus:outline-none">
-              {profile?.avatar ? (
+              {profile?.avatar_url ? (
                 
                 <img 
-                  src={profile?.avatar.image_url} 
+                  src={profile.avatar_url} 
                   alt="Profile" 
                   className="w-6 h-6 lg:w-7 lg:h-7 rounded-full object-cover border border-[#CB6CE6]"
                 />

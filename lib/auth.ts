@@ -24,7 +24,7 @@ export async function setToken(token: string) {
 }
 
 export async function setRefreshToken(refresh: string) {
-  const expireAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 7 days
+  const expireAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
   const cookieStore = await cookies();
   await cookieStore.set({
     name: 'refreshToken',

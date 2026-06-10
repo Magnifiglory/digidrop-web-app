@@ -8,7 +8,7 @@ export interface UserProfile {
   id: number
   names: string;
   email: string;
-  avatar: AvatarOption;
+  avatar_url: string | null;
   current_pass_id: string;
   current_pass_power: number
   wallet_addr: string;

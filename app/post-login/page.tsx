@@ -66,7 +66,7 @@ export default function PostLogin() {
           className="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center"
         >
           <Image
-            src="/assets_icon/2.png"
+            src="/assets_icon/2.webp"
             alt="Loading State"
             width={112}
             height={112}
