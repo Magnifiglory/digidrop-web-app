@@ -6,7 +6,6 @@ export async function POST(
   { params }: { params: Promise<{ taskId: string }> }
 ) {
     const { taskId } = await params
-    console.log("taskId:", taskId)
   const data = await startTask(Number(taskId));
   return Response.json(data);
 }

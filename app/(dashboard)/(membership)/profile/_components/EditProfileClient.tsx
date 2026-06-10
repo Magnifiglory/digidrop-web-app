@@ -1,54 +1,37 @@
 "use client"
-import { Suspense,useEffect, useState} from "react"
+import { useState } from "react"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { profileSchema } from '@/actions/forms/schema';
 import { useCompleteTask } from '@/hooks/useCompleteQuest';
 import { useRouter, useSearchParams } from 'next/navigation';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
 import { useForm } from 'react-hook-form';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { updateProfile } from "@/actions/user";
+import { logout } from "@/lib/auth";
 import { toast } from "sonner";
-import { apiClient } from "@/apiClient/client";
 import { Camera, ChevronDown, ChevronUp, Loader2, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { AvatarOption, UserProfile } from "@/types/response-type";
 import { useUserStore } from "@/store/useUserProfile";
 
-
+// Static list of locally hosted avatars — no backend call needed
+const AVATAR_OPTIONS = Array.from({ length: 32 }, (_, i) => `/avatars/${i + 1}.webp`);
 
 interface EditProfileModalProps {
   onClose?: () => void;
   onBackToDashboard?: () => void;
 }
+
 const EditProfileClient = ({ onClose, onBackToDashboard }: EditProfileModalProps) => {
     const router = useRouter()
     const searchParams = useSearchParams();
     const [isLoading, setIsLoading] = useState(false);
-    const [avatarOptions, setAvatarOptions] = useState<AvatarOption[]>([]);  
     const [isAvatarMenuOpen, setIsAvatarMenuOpen] = useState(false);
     const profile = useUserStore((state) => state.profile);
     const setProfile = useUserStore((state) => state.setProfile);
-    const [selectedAvatarId, setSelectedAvatarId] = useState<number | null>(profile?.avatar?.id || null);
+    const [selectedAvatarUrl, setSelectedAvatarUrl] = useState<string | null>(profile?.avatar_url || null);
     const taskId = searchParams.get('taskId');
     const completeTask = useCompleteTask();
-    useEffect(() => {
-          apiClient
-            .get("/avatars") // Adjust endpoint if needed
-            .then((res) => setAvatarOptions(res.data))
-            .catch(() => toast.error("Failed to load avatars"));
-        }, []);
- 
 
     const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
@@ -59,24 +42,24 @@ const EditProfileClient = ({ onClose, onBackToDashboard }: EditProfileModalProps
   })
 
    async function onSubmit(values: z.infer<typeof profileSchema>) {
-    // Do something with the form values.
-    if (!selectedAvatarId) {
+    if (!selectedAvatarUrl) {
       toast.error("Please select an avatar");
       return;
     }
     setIsLoading(true);
     try {
-      const updatedProfile: Partial<UserProfile> = await updateProfile({ 
-        ...values, 
-        avatar_id: selectedAvatarId 
+      await updateProfile({ 
+        names: values.names,
+        email: values.email,
+        avatar_url: selectedAvatarUrl,
       });
 
-      // Update global state
+      // Update global state immediately
       setProfile({
         ...profile!,
-        names: updatedProfile.names!,
-        email: updatedProfile.email!,
-        avatar: avatarOptions.find(a => a.id === selectedAvatarId)!,
+        names: values.names,
+        email: values.email,
+        avatar_url: selectedAvatarUrl,
       });
 
       if (taskId) {
@@ -93,19 +76,16 @@ const EditProfileClient = ({ onClose, onBackToDashboard }: EditProfileModalProps
   
   }
 
- 
+  const isAvatarDirty = selectedAvatarUrl !== profile?.avatar_url;
+  const canSave = form.formState.isDirty || isAvatarDirty;
 
-  const selectedAvatarUrl = avatarOptions.find(a => a.id === selectedAvatarId)?.image_url;
-  console.log("avatar url:", selectedAvatarUrl)
-  const isAvatarDirty = selectedAvatarId !== profile?.avatar.id;
-const canSave = form.formState.isDirty || isAvatarDirty;
   return (
     <div className="w-full max-w-md mx-auto p-4 flex items-center justify-center min-h-[50vh]">
-      <div className="relative w-full bg-[#0a0a0a] rounded-2xl p-6 sm:p-8 shadow-2xl border border-white/10 animate-in fade-in zoom-in duration-300">
+      <div className="relative w-full bg-black/50 backdrop-blur-md rounded-2xl p-6 sm:p-8 shadow-2xl border border-white/10 animate-in fade-in zoom-in duration-300">
 
         {/* Close */}
         <button
-          // onClick={onClose}
+          onClick={onClose || (() => router.push('/dashboard'))}
           className="absolute top-4 right-4 text-muted-foreground hover:text-white hover:bg-white/10 p-2 rounded-full transition-all z-10"
         >
           <X className="w-5 h-5" />
@@ -115,7 +95,9 @@ const canSave = form.formState.isDirty || isAvatarDirty;
         <div className="mb-8 flex flex-col items-center">
           <div className="relative group">
             <div className="w-28 h-28 rounded-full border-4 border-white/5 overflow-hidden shadow-2xl bg-[#1a1a1a]">
-              {selectedAvatarUrl && <img src={selectedAvatarUrl} alt="Avatar" className="w-full h-full object-cover" />}
+              {selectedAvatarUrl && (
+                <img src={selectedAvatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+              )}
             </div>
             <button
               onClick={() => setIsAvatarMenuOpen(!isAvatarMenuOpen)}
@@ -134,22 +116,22 @@ const canSave = form.formState.isDirty || isAvatarDirty;
           </button>
 
           <div className={cn(
-            "w-full grid grid-cols-5 gap-3 mt-4 overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] bg-white/5 rounded-xl px-2",
-            isAvatarMenuOpen ? "max-h-[300px] py-4 opacity-100 border border-white/10" : "max-h-0 py-0 opacity-0 border-none"
+            "w-full grid grid-cols-5 gap-3 mt-4 overflow-hidden transition-all duration-500 [transition-timing-function:cubic-bezier(0.4,0,0.2,1)] bg-white/5 rounded-xl px-2",
+            isAvatarMenuOpen ? "max-h-[300px] py-4 opacity-100 border border-white/10 overflow-y-auto" : "max-h-0 py-0 opacity-0 border-none"
           )}>
-            {avatarOptions.map((avatar) => (
+            {AVATAR_OPTIONS.map((avatarUrl) => (
               <button
-                key={avatar.id}
+                key={avatarUrl}
                 type="button"
-                onClick={() => setSelectedAvatarId(avatar.id)}
+                onClick={() => setSelectedAvatarUrl(avatarUrl)}
                 className={cn(
                   "aspect-square rounded-full border-2 overflow-hidden transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-purple-500",
-                  selectedAvatarId === avatar.id
+                  selectedAvatarUrl === avatarUrl
                     ? "border-purple-500 ring-2 ring-purple-500/20 scale-110"
                     : "border-transparent opacity-60 hover:opacity-100"
                 )}
               >
-                <img src={avatar.image_url} alt="" className="w-full h-full object-cover" />
+                <img src={avatarUrl} alt="" className="w-full h-full object-cover" />
               </button>
             ))}
           </div>
@@ -181,15 +163,37 @@ const canSave = form.formState.isDirty || isAvatarDirty;
         </div>
 
         {/* Footer */}
-        <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-4 mt-10 pt-6 border-t border-white/5">
-          <Button
-            variant="ghost"
-            disabled={isLoading}
-            className="w-full sm:w-auto text-muted-foreground hover:text-white hover:bg-white/5"
-            onClick={onBackToDashboard}
-          >
-            Back to Dashboard
-          </Button>
+        <div className="flex flex-col gap-4 sm:flex-row items-center justify-between mt-10 pt-6 border-t border-white/5">
+          <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-start">
+            <Button
+              variant="ghost"
+              disabled={isLoading}
+              className="text-muted-foreground hover:text-white hover:bg-white/5"
+              onClick={onBackToDashboard || (() => router.push('/dashboard'))}
+            >
+              Back
+            </Button>
+
+            <Button
+              variant="ghost"
+              disabled={isLoading}
+              className="bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500 hover:text-white transition-all text-xs font-semibold px-4 py-2 rounded-xl"
+              onClick={async () => {
+                setIsLoading(true);
+                try {
+                  await logout();
+                  toast.success("Logged out successfully");
+                  window.location.href = "/";
+                } catch {
+                  toast.error("Failed to log out");
+                } finally {
+                  setIsLoading(false);
+                }
+              }}
+            >
+              Log Out
+            </Button>
+          </div>
 
           <Button
             disabled={isLoading || !canSave}

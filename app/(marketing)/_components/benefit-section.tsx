@@ -34,7 +34,7 @@ const BCard = ({
       <div className="group flex h-full flex-col items-center rounded-2xl border border-white/10 bg-[#1C1C1C] p-8 text-center transition-all duration-300 hover:border-gray-400 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)]">
         
         {/* Icon - Consistent Height Container */}
-        <div className="mb-6 flex h-[140px] w-full items-center justify-center">
+        <div className="mb-6 flex h-[90px] sm:h-[100px] w-full items-center justify-center">
           {icon}
         </div>
 
@@ -57,59 +57,59 @@ const BenefitSection: React.FC = () => {
   const cards = [
     {
       icon: (
-        <div className="relative h-[120px] w-[120px]">
+        <div className="relative h-[70px] w-[70px] sm:h-[80px] sm:w-[80px]">
         <Image
-          src="/assets_icon/22.png"
+          src="/assets_icon/22.webp"
           alt="Cosmic Curiosity"
           fill
           className="object-contain drop-shadow-lg"
         />
         </div>
       ),
-      heading: "Cosmic Curiosity",
-      text: "Mint a one of a kind Passport to unlock an ever-expanding universe of interactive quests and collaborative discoveries.",
+      heading: "Your Passport",
+      text: "Mint a Soulbound Passport and unlock quests, tasks, and community rewards. One wallet. One identity. No bots.",
     },
     {
       icon: (
-        <div className="relative h-[120px] w-[120px]">
+        <div className="relative h-[70px] w-[70px] sm:h-[80px] sm:w-[80px]">
         <Image
-          src="/assets_icon/19.png"
+          src="/assets_icon/19.webp"
           alt="Gather Stardust"
           fill
           className="object-contain drop-shadow-lg"
         />
        </div>
       ),
-      heading: "Gather Stardust",
-      text: "Engage in inspiring activities to collect Stardust. It is not currency, it is glory. Illuminate your path on the community leaderboard.",
+      heading: "Earn Stardust",
+      text: "Do quests, log in daily, refer friends. Stardust is your score — it ranks you on the leaderboard and shows everyone how active you are.",
     },
     {
       icon: (
-        <div className="relative h-[120px] w-[120px]">
+        <div className="relative h-[70px] w-[70px] sm:h-[80px] sm:w-[80px]">
         <Image
-          src="/assets_icon/2.png"
+          src="/assets_icon/2.webp"
           alt="Eternal Bonds"
           fill
           className="object-contain drop-shadow-lg"
         />
         </div>
       ),
-      heading: "Eternal Bonds",
-      text: "Invite fellow travelers to expand the constellation, creating lasting connections and collective adventures across the digital cosmos.",
+      heading: "Refer & Grow",
+      text: "Share your referral link. Every friend you bring in adds 100 Stardust to your score. More friends = higher rank.",
     },
     {
       icon: (
-        <div className="relative h-[120px] w-[120px]">
+        <div className="relative h-[70px] w-[70px] sm:h-[80px] sm:w-[80px]">
         <Image
-          src="/assets_icon/3.png"
+          src="/assets_icon/3.webp"
           alt="Loyalty Honors"
           fill
           className="object-contain drop-shadow-lg"
         />
         </div>
       ),
-      heading: "Loyalty Honors",
-      text: "Dedicated explorers receive exquisite digital badges and role upgrades, honoring your enduring role in our shared galactic story.",
+      heading: "Recognition",
+      text: "Top users on the leaderboard get community recognition. Your Stardust score is your proof of participation.",
     },
   ]
 
@@ -123,7 +123,7 @@ const BenefitSection: React.FC = () => {
           {...fadeUp(0.1)}
         >
           <h2 className="text-3xl font-bold uppercase sm:text-4xl md:text-5xl">
-            Why Venture Into the Deep?
+            Why Join Digidrops?
           </h2>
         </motion.div>
 

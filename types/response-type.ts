@@ -8,7 +8,7 @@ export interface UserProfile {
   id: number
   names: string;
   email: string;
-  avatar: AvatarOption;
+  avatar_url: string | null;
   current_pass_id: string;
   current_pass_power: number
   wallet_addr: string;
@@ -45,10 +45,12 @@ export interface DigiPass {
 export interface TaskResponse {
   id: number
   icon: string,
-  title: string, 
+  title: string,
   points: number,
   external_link: string
   task_type?: 'on_site' | 'off_site',
   is_active: boolean
   user_status: 'pending' | 'started' | 'completed';
+  /** ISO timestamp set by the server when the task was started (optional) */
+  started_at?: string;
 }

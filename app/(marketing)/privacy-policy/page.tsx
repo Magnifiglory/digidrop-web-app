@@ -14,16 +14,16 @@ const SECTIONS: PolicySection[] = [
     id: 'intro',
     title: '1. Introduction',
     content: [
-      'In the silent vastness of Digiverse, trust is the gravity that holds everything together.',
-      'Your journey is protected by design quietly, deliberately, and with restraint.',
+      'In the quiet vastness of Digiverse, trust is everything. We built this platform with your privacy front and center.',
+      'Your journey here is protected by design — quietly, deliberately, and with restraint.',
     ],
   },
   {
     id: 'collection',
     title: '2. Data Collection',
     content: [
-      'We navigate primarily by public wallet address nothing more.',
-      'Digi Drop does not collect personal names, physical addresses, or financial identifiers unless you voluntarily transmit them for clearly defined optional activities.',
+      'We track your public wallet address and nothing more.',
+      'Digidrops does not collect your name, phone number, physical address, or any financial identifiers. We do not need them.',
     ],
   },
   {
@@ -31,26 +31,25 @@ const SECTIONS: PolicySection[] = [
     title: '3. Usage',
     content: [
       'Your wallet address is used only to:',
-      '• Verify ownership of a Digi Drop Pass before dashboard access',
-      '• Track Stardust as non-monetary participation markers',
-      '• Confirm Pass Rank (Void / Starlight / Solar)',
-      '• Record quest progression across the constellation',
+      '• Confirm you own a Digidrops Passport before granting dashboard access',
+      '• Track your Stardust as a non-monetary participation score',
+      '• Record quest completions for leaderboard ranking',
     ],
   },
   {
     id: 'protection',
     title: '4. Protection',
     content: [
-      'Your path is shielded by blockchain transparency and internal access protocols.',
-      'DigiDrop does not sell, rent, or trade user data—ever.',
+      'Your data is protected by blockchain transparency and strict internal access controls.',
+      'Digidrops does not sell, rent, or share your data with anyone — ever.',
     ],
   },
   {
     id: 'command',
     title: '5. Your Command',
     content: [
-      'You may disconnect at any time and drift freely.',
-      'For questions, course corrections, or concerns, contact Mission Control through official DigiDrop channels.',
+      'You can disconnect your wallet at any time. Your access ends immediately.',
+      'For any questions or concerns, contact us through official Digidrops channels.',
     ],
   },
 ];
@@ -79,18 +78,45 @@ export default function PrivacyPolicy() {
   }, []);
 
   return (
-    <main
-      className="min-h-screen w-full scroll-smooth bg-[#0B0B0B] font-chakra text-white"
-      style={{
-        backgroundImage:
-          'linear-gradient(179.5deg, rgba(59, 31, 131, 0.3) 0.44%, rgba(0, 74, 173, 0.5) 49.67%, rgba(28, 28, 28, 0.75) 99.57%)',
-        backgroundAttachment: 'fixed',
-      }}
-    >
-      <div className="container mx-auto flex flex-col px-6 py-20 md:flex-row lg:px-12">
+    <main className='relative min-h-screen w-full scroll-smooth bg-[#0B0B0B] font-chakra text-white bg-[url("/assets/bg/terms%20bg.webp")] bg-cover bg-center bg-no-repeat bg-fixed overflow-hidden'>
+      {/* Ambient glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute inset-0 bg-black/70 pointer-events-none" />
+
+      <div className="container mx-auto flex flex-col px-6 py-20 md:flex-row lg:px-12 relative z-10">
         
         {/* ===== SIDEBAR NAV ===== */}
-        
+        <aside className="mb-12 md:mb-0 md:w-1/4">
+          <nav className="sticky top-28">
+            <h3 className="mb-6 text-sm font-bold uppercase tracking-widest text-gray-400">
+              Contents
+            </h3>
+            <ul className="space-y-4 border-l-2 border-white/10 pl-6">
+              {SECTIONS.map((section) => (
+                <li key={section.id}>
+                  <Link
+                    href={`#${section.id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById(section.id)?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                      });
+                      setActiveId(section.id);
+                    }}
+                    className={`block text-lg transition-all duration-300 ${
+                      activeId === section.id
+                        ? 'translate-x-2 font-bold text-blue-400'
+                        : 'text-gray-400 hover:text-white'
+                    }`}
+                  >
+                    {section.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </aside>
 
         {/* ===== MAIN CONTENT ===== */}
         <div className="md:w-3/4 md:pl-20">
@@ -99,7 +125,7 @@ export default function PrivacyPolicy() {
               Privacy Policy
             </h1>
             <p className="text-xl font-medium text-gray-300">
-              Guardians of Your Cosmic Privacy
+              How we handle your data
             </p>
           </div>
 
@@ -114,14 +140,24 @@ export default function PrivacyPolicy() {
                   {section.title}
                 </h2>
                 <div className="space-y-4">
-                  {section.content.map((paragraph, idx) => (
-                    <p
-                      key={idx}
-                      className="text-base leading-relaxed text-gray-300 sm:text-lg"
-                    >
-                      {paragraph}
-                    </p>
-                  ))}
+                  {section.content.map((paragraph, idx) => {
+                    if (paragraph.startsWith('•')) {
+                      return (
+                        <div key={idx} className="flex items-start gap-3 text-base leading-relaxed text-gray-300 sm:text-lg pl-4">
+                          <span className="text-blue-400 font-bold mt-1.5 text-xs">●</span>
+                          <span>{paragraph.replace(/^•\s*/, '')}</span>
+                        </div>
+                      );
+                    }
+                    return (
+                      <p
+                        key={idx}
+                        className="text-base leading-relaxed text-gray-300 sm:text-lg"
+                      >
+                        {paragraph}
+                      </p>
+                    );
+                  })}
                 </div>
               </article>
             ))}

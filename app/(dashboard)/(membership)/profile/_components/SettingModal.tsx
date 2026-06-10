@@ -5,17 +5,13 @@ import { X, Loader2, AlertCircle, Camera, ChevronDown, ChevronUp } from "lucide-
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { apiClient } from "@/apiClient/client";
+import { toast } from "sonner";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const AVATAR_OPTIONS = Array.from({ length: 20 }, (_, i) => 
   `https://api.dicebear.com/9.x/notionists/svg?seed=Avatar${i}&backgroundColor=b6e3f4,c0aede,d1d4f9`
 );
-
-const toast = {
-  success: (msg: string) => console.log(`Success: ${msg}`),
-  error: (msg: string) => console.error(`Error: ${msg}`),
-};
 
 
 interface AvatarOption {
@@ -273,7 +269,7 @@ const SettingsModal = ({
           </button>
 
           <div className={cn(
-            "w-full grid grid-cols-5 gap-3 mt-4 overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] bg-white/5 rounded-xl px-2",
+            "w-full grid grid-cols-5 gap-3 mt-4 overflow-hidden transition-all duration-500 [transition-timing-function:cubic-bezier(0.4,0,0.2,1)] bg-white/5 rounded-xl px-2",
             isAvatarMenuOpen ? "max-h-[300px] py-4 opacity-100 border border-white/10" : "max-h-0 py-0 opacity-0 border-none"
           )}>
             {avatarOptions.map((avatar, index) => (

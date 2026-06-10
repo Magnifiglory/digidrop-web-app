@@ -21,11 +21,10 @@ export default function PassActionButton({ pass }: Props) {
   const currentPower = profile?.current_pass_power;
   const isCurrent = profile?.current_pass_id === pass.id;
   const isUpgrade = pass.point_power > currentPower;
-  console.log("isUpgrade:", isUpgrade)
   // Current pass
   if (isCurrent) {
     return (
-      <Button disabled size="lg" className="px-20">
+      <Button disabled className="w-auto mx-auto px-8 py-2 rounded-xl block text-sm font-semibold font-chakra">
         Current Pass
       </Button>
     );
@@ -41,7 +40,7 @@ export default function PassActionButton({ pass }: Props) {
   // Lower pass → disabled
   
   return (
-    <Button disabled size="lg" className="px-20 opacity-50">
+    <Button disabled className="w-auto mx-auto px-8 py-2 rounded-xl block text-sm font-semibold font-chakra opacity-50">
       Lower Tier Pass
     </Button>
   );

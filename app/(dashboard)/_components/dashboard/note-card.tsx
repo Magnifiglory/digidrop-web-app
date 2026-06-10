@@ -3,12 +3,10 @@ import React from 'react'
 
 const NoteCard = () => {
   return (
-    <div className='w-full h-auto flex items-center gap-6 border border-gray-400 p-4'>
-        <CircleAlert size={50} color='#000000'/>
-        <p className="text-gray-400 text-center max-w-lg px-6 py-2 text-sm font-thin font-chakra">
-            NOTE: IT TAKES 1 HOURS DURING PEAK DEMAND TIME FOR THE
-            POINTS TO BE MADE AVAILABLE FOR CLAIMING ON CERTAIN
-            QUESTS.
+    <div className='w-full flex items-center gap-3 border border-yellow-500/10 bg-yellow-500/5 rounded-xl px-4 py-2.5 backdrop-blur-sm'>
+        <CircleAlert size={18} className="text-yellow-500 shrink-0"/>
+        <p className="text-[9px] sm:text-[10px] md:text-[11px] text-gray-400 font-chakra leading-relaxed">
+            NOTE: IT TAKES 1 HOUR DURING PEAK DEMAND TIME FOR THE POINTS TO BE MADE AVAILABLE FOR CLAIMING ON CERTAIN QUESTS.
         </p>
     </div>
   )

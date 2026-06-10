@@ -1,5 +1,5 @@
 import { apiClient } from "@/apiClient/client"
-
+import { startMockTask, completeMockTask } from "@/app/data/tasks/onsite-task"
 
 type Payload={
     txHash: string,
@@ -8,6 +8,9 @@ type Payload={
 }
 
 export async function verifyPayment(payload:Payload) {
+    if (process.env.NODE_ENV === 'development') {
+        return { success: true, txHash: payload.txHash, newPassId: payload.newPassId };
+    }
     try {
         const res = await apiClient.post('/verify/payment', payload)
         return res.data
@@ -19,6 +22,15 @@ export async function verifyPayment(payload:Payload) {
 
 
 export async function startTask(taskId: number) {
+  if (process.env.NODE_ENV === 'development') {
+    startMockTask(taskId);
+    const mockLinks: Record<number, string> = {
+      1: "https://x.com/Digidrops_xyz",
+      2: "https://discord.gg/digidrops",
+      3: "/mint-pass"
+    };
+    return { redirect_url: mockLinks[taskId] || "https://x.com/Digidrops_xyz" };
+  }
   try {
     const res = await apiClient.post(`/tasks/${taskId}/start`);
     return res.data;
@@ -31,6 +43,10 @@ export async function startTask(taskId: number) {
 }
 
 export async function completeTask(taskId: number) {
+  if (process.env.NODE_ENV === 'development') {
+    completeMockTask(taskId);
+    return { success: true };
+  }
   try {
     const res = await apiClient.post(`/tasks/${taskId}/completed`);
     return res.data;

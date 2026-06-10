@@ -41,7 +41,7 @@ const BrandSupport = () => {
           className="mb-16 text-center md:text-left"
         >
           <h2 className="text-3xl font-bold uppercase sm:text-4xl md:text-5xl text-white">
-            EXPANDING OUR REACH THROUGH STRATEGIC PARTNERSHIPS
+            BACKED BY LEADING WEB3 PARTNERS
           </h2>
         </motion.div>
       
@@ -49,13 +49,12 @@ const BrandSupport = () => {
         {/* Brands Grid */}
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4 place-items-center">
           {brands.map((logo, index) => (
-            <div key={index} className="relative h-16 w-40">
+            <div key={index} className="relative h-12 w-28 sm:h-16 sm:w-40">
             <Image
-              key={index}
               src={logo}
               alt={`Brand ${index + 1}`}
               fill
-              className="h-16 w-auto object-contain grayscale hover:grayscale-0 transition duration-300"
+              className="object-contain grayscale hover:grayscale-0 transition duration-300"
             />
             </div>
           ))}
