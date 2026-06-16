@@ -129,11 +129,18 @@ const DashboardNavbar = () => {
           <div className="flex items-center gap-2 sm:gap-4 min-w-0">
             <Link href="/dashboard" className="shrink-0">
               <Image 
-                src="/assets/logo.png?v=2" 
+                src="/assets/logo.png" 
                 alt="Digidrops Logo" 
                 height={300} 
                 width={100} 
-                className="h-12 w-auto md:h-16 sm:h-14  object-contain" 
+                className="hidden sm:block h-12 w-auto md:h-16 sm:h-14 object-contain" 
+              />
+              <Image 
+                src="/assets/iconLogo.webp" 
+                alt="Digidrops Logo" 
+                height={300} 
+                width={100} 
+                className="block sm:hidden h-8 w-auto object-contain" 
               />
             </Link>
 

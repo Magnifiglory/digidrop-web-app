@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center">
               <Image
-                src="/assets/logo.png?v=2"
+                src="/assets/logo.png"
                 alt="Digi Drop Logo"
                 width={3000}
                 height={100}
