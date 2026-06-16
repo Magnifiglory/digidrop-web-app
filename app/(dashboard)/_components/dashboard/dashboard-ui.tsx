@@ -265,7 +265,7 @@ const DashboardUi = () => {
 
               {/* Connected / Not Connected Wallet Display */}
               <div className="flex items-center gap-1 bg-black/50 border border-white/10 backdrop-blur-md rounded-full px-2.5 py-1.5 min-w-0">
-                <p className="text-[10px] sm:text-xs text-gray-200 font-mono truncate max-w-[80px] sm:max-w-none">
+                <p className={`text-[10px] sm:text-xs font-mono truncate max-w-[80px] sm:max-w-none ${profile?.wallet_addr ? 'text-gray-200' : 'text-gray-400'}`}>
                   {profile?.wallet_addr 
                     ? `${profile.wallet_addr.slice(0, 4)}...${profile.wallet_addr.slice(-4)}` 
                     : "Not Connected"
@@ -332,7 +332,7 @@ const DashboardUi = () => {
 
             {/* Connected / Not Connected Wallet Display */}
             <div className="flex items-center gap-1 bg-black/50 border border-white/10 backdrop-blur-md rounded-full px-2.5 py-1.5 min-w-0">
-              <p className="text-[9px] sm:text-xs text-gray-200 font-mono truncate max-w-[80px] sm:max-w-none">
+              <p className={`text-[9px] sm:text-xs font-mono truncate max-w-[80px] sm:max-w-none ${profile?.wallet_addr ? 'text-gray-200' : 'text-gray-400'}`}>
                 {profile?.wallet_addr 
                   ? `${profile.wallet_addr.slice(0, 4)}...${profile.wallet_addr.slice(-4)}` 
                   : "Not Connected"

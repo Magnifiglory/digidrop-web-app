@@ -166,7 +166,7 @@ const DashboardNavbar = () => {
               </button>
 
               <div className="flex items-center gap-2 min-w-0">
-                <p className="text-xs lg:text-sm text-gray-200 font-mono truncate">
+                <p className={`text-xs lg:text-sm font-mono truncate ${profile?.wallet_addr ? 'text-gray-200' : 'text-gray-400'}`}>
                   {truncateWallet(profile?.wallet_addr || "")}
                 </p>
                 <button 
@@ -281,7 +281,7 @@ const DashboardNavbar = () => {
 
                       {/*Wellet Address*/}
                       
-                      <p className="text-xs sm:text-sm text-gray-200 font-mono truncate">
+                      <p className={`text-xs sm:text-sm font-mono truncate ${profile?.wallet_addr ? 'text-gray-200' : 'text-gray-400'}`}>
                         {truncateWallet(profile?.wallet_addr || "")}
                       </p>
 
