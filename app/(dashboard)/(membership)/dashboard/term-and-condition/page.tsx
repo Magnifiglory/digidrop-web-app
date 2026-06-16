@@ -138,7 +138,7 @@ export default function DashboardTermsPage() {
 
           {/* ===== MAIN CONTENT ===== */}
           <div className="md:w-3/4 md:pl-20">
-            <h1 className="mb-16 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-4xl font-bold text-transparent sm:text-5xl">
+            <h1 className="mb-16 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-4xl font-bold text-transparent sm:text-5xl font-chakra">
               Terms & Conditions
             </h1>
 
@@ -149,7 +149,7 @@ export default function DashboardTermsPage() {
                   id={section.id} 
                   className="scroll-mt-32 border-b border-white/10 pb-12 last:border-0"
                 >
-                  <h2 className="mb-6 text-2xl font-bold uppercase tracking-wide text-white sm:text-3xl">
+                  <h2 className="mb-6 text-2xl font-bold uppercase tracking-wide text-white sm:text-3xl font-chakra">
                     {section.title}
                   </h2>
                   <div className="space-y-4">
