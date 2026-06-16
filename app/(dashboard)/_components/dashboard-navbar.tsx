@@ -129,7 +129,7 @@ const DashboardNavbar = () => {
           <div className="flex items-center gap-2 sm:gap-4 min-w-0">
             <Link href="/dashboard" className="shrink-0">
               <Image 
-                src="/assets/logo.png" 
+                src="/assets/logo.png?v=2" 
                 alt="Digidrops Logo" 
                 height={300} 
                 width={100} 
