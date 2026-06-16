@@ -138,7 +138,7 @@ export default function Manifesto() {
                 Technical Specification
               </span>
             </div>
-            <h1 className="mb-3 bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-4xl font-extrabold text-transparent sm:text-6xl tracking-tight leading-none uppercase">
+            <h1 className="mb-3 bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-4xl font-extrabold text-transparent sm:text-6xl tracking-tight leading-none uppercase font-chakra">
               Digidrops Manifesto
             </h1>
             <p className="text-xl font-medium text-zinc-400">
