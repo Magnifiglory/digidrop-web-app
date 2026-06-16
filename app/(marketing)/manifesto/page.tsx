@@ -154,7 +154,7 @@ export default function Manifesto() {
                 className="scroll-mt-32 border-b border-white/5 pb-16 last:border-0"
               >
                 <div className="mb-6">
-                  <h2 className="text-2xl font-bold uppercase tracking-wider text-white sm:text-3xl">
+                  <h2 className="text-2xl font-bold uppercase tracking-wider text-white sm:text-3xl font-chakra">
                     {section.title}
                   </h2>
                   <p className="text-sm font-mono text-purple-400 mt-1 uppercase tracking-widest font-semibold">
