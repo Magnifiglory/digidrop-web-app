@@ -92,7 +92,7 @@ export default function DashboardManifesto() {
   }, []);
 
   return (
-    <main className='relative min-h-screen w-full scroll-smooth bg-[#0B0B0B] font-chakra text-white bg-[url("/assets/bg/mint%20pass%20bg.webp")] bg-cover bg-center bg-no-repeat bg-fixed overflow-hidden'>
+    <main className='relative min-h-screen w-full scroll-smooth bg-[#0B0B0B] text-white bg-[url("/assets/bg/mint%20pass%20bg.webp")] bg-cover bg-center bg-no-repeat bg-fixed overflow-hidden'>
       {/* Ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute inset-0 bg-black/70 pointer-events-none" />
