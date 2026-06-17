@@ -133,7 +133,14 @@ const DashboardNavbar = () => {
                 alt="Digidrops Logo" 
                 height={300} 
                 width={100} 
-                className="h-12 w-auto md:h-16 sm:h-14  object-contain" 
+                className="hidden sm:block h-12 w-auto md:h-16 sm:h-14 object-contain" 
+              />
+              <Image 
+                src="/assets/iconLogo.webp" 
+                alt="Digidrops Logo" 
+                height={300} 
+                width={100} 
+                className="block sm:hidden h-8 w-auto object-contain" 
               />
             </Link>
 
@@ -159,7 +166,7 @@ const DashboardNavbar = () => {
               </button>
 
               <div className="flex items-center gap-2 min-w-0">
-                <p className="text-xs lg:text-sm text-gray-200 font-mono truncate">
+                <p className={`text-xs lg:text-sm font-mono truncate ${profile?.wallet_addr ? 'text-gray-200' : 'text-gray-400'}`}>
                   {truncateWallet(profile?.wallet_addr || "")}
                 </p>
                 <button 
@@ -209,7 +216,7 @@ const DashboardNavbar = () => {
             <Button 
               variant="outline" 
               onClick={() => setIsBetaDialogOpen(true)} 
-              className="border-purple-500/50 bg-purple-400 text-black hover:bg-purple-500 text-sm"
+              className="btn-landing-outline border-purple-500/50 text-sm font-semibold rounded-xl px-4 py-1.5"
             >
               Beta
             </Button>
@@ -274,7 +281,7 @@ const DashboardNavbar = () => {
 
                       {/*Wellet Address*/}
                       
-                      <p className="text-xs sm:text-sm text-gray-200 font-mono truncate">
+                      <p className={`text-xs sm:text-sm font-mono truncate ${profile?.wallet_addr ? 'text-gray-200' : 'text-gray-400'}`}>
                         {truncateWallet(profile?.wallet_addr || "")}
                       </p>
 
@@ -348,7 +355,7 @@ const DashboardNavbar = () => {
                   )}
                   
                   <Button 
-                    className="w-full bg-purple-400 text-black hover:bg-purple-500 font-medium h-11 sm:h-12"
+                    className="w-full btn-landing-outline font-medium h-11 sm:h-12 rounded-xl"
                     onClick={() => handleNavClick(() => setIsBetaDialogOpen(true))}
                   >
                     Beta
@@ -396,7 +403,7 @@ const DashboardNavbar = () => {
                 <div className="flex justify-center">
                 <Button 
                   onClick={() => closeModal(setIsBetaDialogOpen)} 
-                  className="w-full bg-purple-600 hover:bg-purple-500 text-white"
+                  className="w-full btn-landing-gradient rounded-xl font-semibold py-2.5"
                 >
                   Close Transmission
                 </Button>
@@ -446,7 +453,7 @@ const DashboardNavbar = () => {
               <div className="border-t border-white/10 px-6 py-4 text-right bg-[#121212]">
                 <Button 
                   onClick={() => closeModal(setIsHowToPlayDialogOpen)} 
-                  className="bg-purple-600 hover:bg-purple-500 font-semibold rounded-xl text-white"
+                  className="btn-landing-gradient font-semibold rounded-xl px-6 py-2.5"
                 >
                   Close
                 </Button>
@@ -540,7 +547,7 @@ const DashboardNavbar = () => {
                 </p>
                 <Button 
                   onClick={() => closeModal(setIsFAQDialogOpen)} 
-                  className="bg-purple-600 hover:bg-purple-500 font-semibold rounded-xl text-white w-full sm:w-auto"
+                  className="btn-landing-gradient font-semibold rounded-xl px-6 py-2.5 w-full sm:w-auto"
                 >
                   Close
                 </Button>

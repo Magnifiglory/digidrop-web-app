@@ -18,16 +18,17 @@ function CardBase({
       className="flex items-center justify-center w-full"
     >
       <div className="bg-[linear-gradient(203.64deg,rgba(24,24,24,0.5)_9.95%,rgba(0,74,173,0.5)_50.53%,rgba(25,24,24,0.5)_90.05%)]
-          text-white p-3 xs:p-4 sm:p-5 md:p-6 rounded-tl-[1.25rem] rounded-br-[1.25rem] sm:rounded-tl-[1.5rem] sm:rounded-br-[1.5rem] md:rounded-tl-[2rem] md:rounded-br-[2rem] shadow-lg
+          text-white p-4 sm:p-5 md:p-6 rounded-tl-[1.25rem] rounded-br-[1.25rem] sm:rounded-tl-[1.5rem] sm:rounded-br-[1.5rem] md:rounded-tl-[2rem] md:rounded-br-[2rem] shadow-lg
           transform hover:-translate-y-2
-          transition-transform duration-300 ease-out w-full text-center"
+          transition-transform duration-300 ease-out w-full text-center
+          aspect-square sm:aspect-auto flex flex-col justify-center items-center"
       >
-        <h2 className="text-[10px] xs:text-[11px] sm:text-xs md:text-sm font-bold mb-1.5 xs:mb-2 sm:mb-3 md:mb-4 font-chakra tracking-wider">
+        <h2 className="text-xs xs:text-sm md:text-base font-bold mb-2 sm:mb-3 md:mb-4 font-chakra tracking-wider">
           {title}
         </h2>
         <button
-          className="px-2 py-1 xs:px-3 xs:py-1.5 sm:px-5 sm:py-2 md:px-6 md:py-2.5 font-chakra bg-[rgba(161,118,214,0.14)]
-            border border-white/30 text-gray-100 text-[8px] xs:text-[9px] sm:text-xs md:text-sm font-semibold
+          className="px-3 py-1.5 sm:px-5 sm:py-2 md:px-6 md:py-2.5 font-chakra bg-[rgba(161,118,214,0.14)]
+            border border-white/30 text-gray-100 text-[10px] xs:text-xs md:text-sm font-semibold
             rounded-lg sm:rounded-xl shadow-lg backdrop-blur-md hover:bg-[rgba(109,87,14,0.49)]
             hover:scale-105 transition-all duration-300 ease-out w-full sm:w-auto whitespace-nowrap"
         >
@@ -63,23 +64,23 @@ export default function Circular() {
         {/* ===== MOBILE (< 640px): single-column zigzag ===== */}
         <div className="flex flex-col items-center justify-evenly flex-1 w-full sm:hidden z-20 px-2 gap-3 xs:gap-4">
 
-          <div className="w-[75%] xs:w-[80%] max-w-[280px] self-start">
+          <div className="w-[45%] xs:w-[50%] max-w-[170px] self-start">
             <CardBase title="DAILY LOGIN" btn="50 STARDUST" delay={0} />
           </div>
 
-          <div className="w-[75%] xs:w-[80%] max-w-[280px] self-end">
+          <div className="w-[45%] xs:w-[50%] max-w-[170px] self-end">
             <CardBase title="MINT A GOLDEN PASS" btn="4X STARDUST" delay={0.8} />
           </div>
 
-          <div className="w-[75%] xs:w-[80%] max-w-[280px] self-start">
+          <div className="w-[45%] xs:w-[50%] max-w-[170px] self-start">
             <CardBase title="REFER YOUR FRIEND" btn="100 STARDUST" delay={0.4} />
           </div>
 
-          <div className="w-[75%] xs:w-[80%] max-w-[280px] self-end">
+          <div className="w-[45%] xs:w-[50%] max-w-[170px] self-end">
             <CardBase title="COMMUNITY REWARD" btn="UNLIMITED STARDUST" delay={1.2} />
           </div>
 
-          <div className="w-[75%] xs:w-[80%] max-w-[280px] self-center">
+          <div className="w-[45%] xs:w-[50%] max-w-[170px] self-center">
             <CardBase title="MULTIPLE QUESTS" btn="MULTIPLE STARDUST" delay={0.6} />
           </div>
         </div>

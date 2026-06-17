@@ -92,7 +92,7 @@ export default function DashboardManifesto() {
   }, []);
 
   return (
-    <main className='relative min-h-screen w-full scroll-smooth bg-[#0B0B0B] font-chakra text-white bg-[url("/assets/bg/mint%20pass%20bg.webp")] bg-cover bg-center bg-no-repeat bg-fixed overflow-hidden'>
+    <main className='relative min-h-screen w-full scroll-smooth bg-[#0B0B0B] text-white bg-[url("/assets/bg/mint%20pass%20bg.webp")] bg-cover bg-center bg-no-repeat bg-fixed overflow-hidden'>
       {/* Ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute inset-0 bg-black/70 pointer-events-none" />
@@ -154,7 +154,7 @@ export default function DashboardManifesto() {
                   Technical Specification
                 </span>
               </div>
-              <h1 className="mb-3 bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-4xl font-extrabold text-transparent sm:text-6xl tracking-tight leading-none uppercase">
+              <h1 className="mb-3 bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-4xl font-extrabold text-transparent sm:text-6xl tracking-tight leading-none uppercase font-chakra">
                 Digidrops Manifesto
               </h1>
               <p className="text-xl font-medium text-zinc-400">
@@ -170,7 +170,7 @@ export default function DashboardManifesto() {
                   className="scroll-mt-32 border-b border-white/5 pb-16 last:border-0"
                 >
                   <div className="mb-6">
-                    <h2 className="text-2xl font-bold uppercase tracking-wider text-white sm:text-3xl">
+                    <h2 className="text-2xl font-bold uppercase tracking-wider text-white sm:text-3xl font-chakra">
                       {section.title}
                     </h2>
                     <p className="text-sm font-mono text-purple-400 mt-1 uppercase tracking-widest font-semibold">
