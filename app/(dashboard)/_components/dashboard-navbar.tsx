@@ -123,23 +123,19 @@ const DashboardNavbar = () => {
   return (
     <>
       <header className="sticky top-0 z-50 h-16 w-full bg-[#0a0b1c]/70 backdrop-blur-md font-chakra text-gray-200">
-        <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+        <div className="flex h-full w-full max-w-none items-center justify-between gap-4 px-4 sm:px-8 lg:px-12">
           
           {/*Logo */}
           <div className="flex items-center gap-2 sm:gap-4 min-w-0">
             <Link href="/dashboard" className="shrink-0">
-              <Image 
+              <img 
                 src="/assets/logo.png" 
                 alt="Digidrops Logo" 
-                height={300} 
-                width={100} 
                 className="hidden sm:block h-12 w-auto md:h-16 sm:h-14 object-contain" 
               />
-              <Image 
+              <img 
                 src="/assets/iconLogo.webp" 
                 alt="Digidrops Logo" 
-                height={300} 
-                width={100} 
                 className="block sm:hidden h-8 w-auto object-contain" 
               />
             </Link>
