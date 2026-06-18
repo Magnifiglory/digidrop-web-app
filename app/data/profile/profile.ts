@@ -1,5 +1,6 @@
 import { apiClient } from "@/apiClient/client";
 import { loginRequired } from "../users";
+import { redirect } from "next/navigation";
 
 
 export async function getProfile() {
@@ -16,7 +17,10 @@ export async function getProfile() {
     try {
         const res = await apiClient.get('/profile');
         return res.data;
-    } catch (error) {
+    } catch (error: any) {
+        if (error?.response?.status === 401) {
+            redirect("/login");
+        }
         throw error;
     }
 }
@@ -33,7 +37,10 @@ export async function getProfileStats() {
     try {
         const res = await apiClient.get('/profile/stats');
         return res.data;
-    } catch (error) {
+    } catch (error: any) {
+        if (error?.response?.status === 401) {
+            redirect("/login");
+        }
         throw error;
     }
 }
@@ -57,7 +64,10 @@ export async function getLeaderboardstats(){
     try {
         const res = await apiClient.get('/leaderboard/')
         return res.data
-    } catch (error) {
+    } catch (error: any) {
+        if (error?.response?.status === 401) {
+            redirect("/login");
+        }
         throw error;
     }
 }
