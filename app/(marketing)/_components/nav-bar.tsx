@@ -53,18 +53,15 @@ const Navbar: React.FC = () => {
           ? "bg-[#0a0b1c]/50 backdrop-blur-md border-b border-white/10" 
           : "bg-transparent backdrop-blur-none border-b border-transparent"
       }`}>
-        <div className="container mx-auto flex h-full items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="w-full flex h-full items-center justify-between px-4 sm:px-8 lg:px-12">
           
           {/* Logo Section */}
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center">
-              <Image
+              <img
                 src="/assets/logo.png"
                 alt="Digi Drop Logo"
-                width={3000}
-                height={100}
                 className="h-8 sm:h-9 md:h-10 w-auto object-contain"
-                priority
               />
             </Link>
 
