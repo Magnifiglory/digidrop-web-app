@@ -129,7 +129,7 @@ const ReferralSection = () => {
           
           {/* --- 1. HEADER SECTION --- */}
           <motion.header variants={itemVariants} className="space-y-6 text-center lg:text-left flex-1 max-w-xl">
-            <h1 className="text-landing-gradient py-1.5 text-3xl font-extrabold leading-tight sm:text-5xl md:text-6xl drop-shadow-[0_0_20px_rgba(168,85,247,0.18)] font-chakra">
+            <h1 className="py-1.5 text-3xl font-extrabold leading-tight sm:text-5xl md:text-6xl drop-shadow-[0_0_20px_rgba(168,85,247,0.18)] font-chakra text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400">
               SHARE AND GATHER UNLIMITED STARDUST
             </h1>
             <p className="mx-auto lg:mx-0 max-w-xl text-sm sm:text-base leading-relaxed text-gray-300">
