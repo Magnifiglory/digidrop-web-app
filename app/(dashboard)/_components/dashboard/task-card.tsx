@@ -38,9 +38,10 @@ function getStoredStartTime(taskId: number): number | null {
   }
 }
 
-function storeStartTime(taskId: number) {
+function storeStartTime(taskId: number, time?: number) {
   try {
-    localStorage.setItem(getStorageKey(taskId), String(Date.now()));
+    const val = time !== undefined ? time : Date.now();
+    localStorage.setItem(getStorageKey(taskId), String(val));
   } catch { /* storage blocked */ }
 }
 
@@ -84,7 +85,7 @@ const Task = ({ data }: { data: TaskResponse }) => {
         if (!isNaN(serverTs)) {
           startedAtMs = serverTs;
           // Keep localStorage in sync with server timestamp
-          storeStartTime(data.id);
+          storeStartTime(data.id, serverTs);
         }
       }
 
