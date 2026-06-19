@@ -10,6 +10,9 @@ export const apiClient = axios.create({
 })
 
 apiClient.interceptors.request.use(async (config) => {
+  if (config.url === '/login') {
+    return config;
+  }
   const accessToken = await getToken()
   if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
   return config;
